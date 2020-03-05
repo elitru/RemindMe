@@ -6,7 +6,8 @@ export default class ThemeHolder {
      * @description array which contains all available color schemes
      */
     private themes: Theme[] = [
-        new Theme('default', '#20fc8f', '#19844e', '#fff', '#2d2d2a', '#3f5e5a')
+        new Theme('default', '#FF6B35', '#004E89', '#fff', '#333', '#eee'),
+        new Theme('default_bad', '#20fc8f', '#19844e', '#fff', '#2d2d2a', '#3f5e5a')
     ];
     /**
      * @description the active color theme
