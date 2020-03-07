@@ -10,7 +10,17 @@ export default class Style{
         display: 'flex',
         alignContent: 'center',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        position: 'relative'
+      },
+      appContent: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative'
       },
       loginContainer: {
         width: '100%',
@@ -18,7 +28,7 @@ export default class Style{
         display: 'flex',
         backgroundColor: theme.background,
         flexDirection: 'column',
-        justifyContent: "space-evenly"
+        justifyContent: 'space-evenly'
       },
       loginHeadline: {
         color: theme.primary,
@@ -43,6 +53,17 @@ export default class Style{
         width: '80%',
         height: 'auto',
         marginTop: 40
+      },
+      loaderContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        zIndex: 100000,
+        backgroundColor: theme.primary,
+        width: '100%',
+        height: '100%',
       },
       defaultInputDark: {
         marginTop: 10,
