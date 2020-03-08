@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import LoaderProps from './../../props/LoaderProps';
 import LoaderState from './../../states/LoaderState';
 
@@ -13,12 +13,18 @@ export default class Loader extends Component<LoaderProps, LoaderState>{
         this.isVisible = this.isVisible.bind(this);
     }
 
+    /**
+     * @description change the current state of the loader (visible, hidden)
+     */
     public setVisibility(isVisible: boolean): void{
         const state: LoaderState = this.state;
         state.isVisible = isVisible;
         this.setState(state);
     }
 
+    /**
+     * @description returns the current state of the loader
+     */
     public isVisible(): boolean{
         return this.state.isVisible;
     }
@@ -31,7 +37,7 @@ export default class Loader extends Component<LoaderProps, LoaderState>{
         return (
             <>
                 <View style={this.state.style.loaderContainer}>
-                    <Text>Loading</Text>
+                    <Image style={this.state.style.loaderGif} source={require('./../../assets/images/loader.gif')} />
                 </View>
             </>
         );

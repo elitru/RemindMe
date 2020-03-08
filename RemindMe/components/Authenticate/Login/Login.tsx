@@ -1,18 +1,14 @@
 import React from 'react';
-import LoginState from './../../states/LoginState';
+import LoginState from '../../../states/LoginState';
 import { Text, View, TextInput, Button, TouchableOpacity, GestureResponderEvent, TouchableHighlightBase, Image } from 'react-native';
-import BaseProps from './../../props/BaseProps';
-import Loader from './../../components/loader/Loader';
+import Loader from '../../loader/Loader';
+import LoginProps from './../../../props/LoginProps';
+import { AuthenticationRenderState } from '../Authenticate';
 
-export default class Login extends React.Component<BaseProps, LoginState>{
-    /**
-     * @description defines whether the content or loader is rendered
-     */
-    private isLoading: boolean = false;
-
+export default class Login extends React.Component<LoginProps, LoginState>{
     constructor(props: any){
         super(props);
-        const state: LoginState = LoginState.fromBaseState(props.baseState);
+        const state: LoginState = LoginState.fromBaseState(props.baseState, props.changeAuthenticationRenderState);
         this.state = state;
 
         //bind functions
@@ -25,7 +21,7 @@ export default class Login extends React.Component<BaseProps, LoginState>{
     /**
      * @event onChangeText
      * @param text current text from input
-     * @description event is fired when text pf username input changes (username) -> updates state
+     * @description event is fired when text of username input changes (username) -> updates state
      */
     private onUsernameChanged(text: string): void{
         const state: LoginState = this.state;
@@ -36,7 +32,7 @@ export default class Login extends React.Component<BaseProps, LoginState>{
     /**
      * @event onChangeText
      * @param text current text from input
-     * @description event is fired when text pf username input changes (password) -> updates state
+     * @description event is fired when text of password input changes (password) -> updates state
      */
     private onPasswordChanged(text: string): void{
         const state: LoginState = this.state;
@@ -59,14 +55,14 @@ export default class Login extends React.Component<BaseProps, LoginState>{
      * @description event is fired when user wants to go to user registration page
      */
     private onGoToRegister(event: GestureResponderEvent): void{
-
+        this.state.changeAuthenticationRenderState!(AuthenticationRenderState.REGISTRATION);
     }
 
     render() {
         return(
             <>
-                { this.isLoading ? <Loader baseState={this.props.baseState} isVisible={true} /> : null}
-                { this.isLoading ? null :
+                { this.state.isLoading ? <Loader baseState={this.props.baseState} isVisible={true} /> : null}
+                { this.state.isLoading ? null :
                     <View style={this.state.style.loginContainer}>
                         <Text style={this.state.style.loginHeadline}>Remind Me</Text>
                         <View style={this.state.style.loginInputContainer}>

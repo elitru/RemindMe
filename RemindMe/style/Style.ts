@@ -54,6 +54,38 @@ export default class Style{
         height: 'auto',
         marginTop: 40
       },
+      registerContainer: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        backgroundColor: theme.background,
+        flexDirection: 'column',
+        justifyContent: 'space-evenly'
+      },
+      registerHeadline: {
+        color: theme.primary,
+        fontSize: 60,
+        fontFamily: 'Anton-Regular',
+        textAlign: 'center',
+        paddingTop: 30,
+        paddingBottom: 30
+      },
+      registerInputContainer: {
+        textAlign: "center",
+        width: '100%',
+        height: 'auto',
+        margin: 'auto',
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center'
+      },
+      registerItemContainer: {
+        width: '80%',
+        height: 'auto',
+        marginTop: 40
+      },
       loaderContainer: {
         position: 'absolute',
         top: 0,
@@ -64,6 +96,14 @@ export default class Style{
         backgroundColor: theme.primary,
         width: '100%',
         height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center'
+      },
+      loaderGif: {
+        width: 60,
+        height: 60
       },
       defaultInputDark: {
         marginTop: 10,

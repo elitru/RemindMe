@@ -18,8 +18,8 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import ThemeHolder from './style/ThemeHolder';
 import BaseState from './states/BaseState';
-import Login from './components/Login/Login';
-import Loader from './components/loader/Loader';
+//import Login from './components/Authenticate/Login/Login';
+import Authenticate from './components/Authenticate/Authenticate';
 
 declare var global: {HermesInternal: null | {}};
 
@@ -27,7 +27,7 @@ class App extends React.Component<any, BaseState>{
 
   constructor(props: any){
     super(props);
-    this.state = new BaseState(new ThemeHolder(), null as any);
+    this.state = new BaseState(new ThemeHolder());
     const state: BaseState = this.state;
     this.state = state;
   }
@@ -36,7 +36,7 @@ class App extends React.Component<any, BaseState>{
     return(
       <View style={this.state.style.app}>
         <View style={this.state.style.appContent}>
-          <Login baseState={this.state} />
+          <Authenticate baseState={this.state} />
         </View>
       </View>
     );
