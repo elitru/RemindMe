@@ -79,7 +79,7 @@ export default class Registration extends Component<RegistrationProps, Registrat
                         <Text style={this.state.style.loginHeadline}>Remind Me</Text>
                         <View style={this.state.style.loginInputContainer}>
                             <TextInput placeholder="Username" style={[this.state.style.defaultInputDark, this.state.style.spaceBottom]} onChangeText={this.onUsernameChanged} />
-                            <TextInput placeholder="Password" style={this.state.style.defaultInputDark} secureTextEntry={true} onChangeText={this.onPasswordChanged} />
+                            <TextInput placeholder="Password" style={[this.state.style.defaultInputDark, this.state.style.spaceBottom]} secureTextEntry={true} onChangeText={this.onPasswordChanged} />
                             <TextInput placeholder="Repeat password" style={this.state.style.defaultInputDark} secureTextEntry={true} onChangeText={this.onPasswordRepeatChanged} />
                             <View style={this.state.style.loginItemContainer}>
                                 <TouchableOpacity onPress={this.onRegister} style={this.state.style.defaultButtonPrimary}>
