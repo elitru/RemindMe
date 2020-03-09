@@ -1,6 +1,7 @@
 import ThemeHolder from "./../style/ThemeHolder";
 import Style from "./../style/Style";
-import Loader from "components/loader/Loader";
+import Loader from "./../components/loader/Loader";
+import App from "App";
 
 export default class BaseState{
     public themeHolder: ThemeHolder;

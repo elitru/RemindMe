@@ -105,6 +105,44 @@ export default class Style{
         width: 60,
         height: 60
       },
+      reminderContainer: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignContent: 'center',
+        backgroundColor: theme.background,
+        flexDirection: 'column'
+      },
+      reminderContent: {
+        display: 'flex',
+        width: '100%',
+        flexGrow: 1
+      },
+      reminderMenu: {
+        width: '100%',
+        height: 65,
+        backgroundColor: theme.menubar,
+        borderTopColor: theme.menubar_border,
+        borderStyle: 'solid',
+        borderTopWidth: 1,
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        alignContent: 'center',
+        flexDirection: 'row',
+        textAlign: 'center'
+      },
+      reminderMenuItem: {
+        
+      },
+      reminderMenuItemIcon: {
+        color: theme.menubar_foreground
+      },
+      reminderMenuItemIconActive: {
+        color: theme.menubar_foreground_active
+      },
       defaultInputDark: {
         marginTop: 10,
         marginBottom: 10,

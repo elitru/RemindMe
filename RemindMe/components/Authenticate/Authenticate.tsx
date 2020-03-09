@@ -1,24 +1,30 @@
 import React, { Component } from 'react';
-import BaseProps from 'props/BaseProps';
-import BaseState from 'states/BaseState';
+import BaseProps from './../../props/BaseProps';
 import AuthenticationHelper from './../../utils/AuthenticationHelper';
 import Login from './Login/Login';
 import Registration from './Registration/Registration';
 import AuthenticationState from './../../states/AuthenticationState';
+import Reminder from './../../components/Reminder/Reminder';
 
 export default class Authenticate extends Component<BaseProps, AuthenticationState>{
     constructor(props: any){
         super(props);
         this.state = AuthenticationState.fromBaseState(props.baseState, AuthenticationRenderState.NONE);
         this.setAuthenticationRenderState = this.setAuthenticationRenderState.bind(this);
+    }
 
+    /**
+     * @description check whether user is logged in as soon as component was rendered correctly
+     */
+    componentDidMount(): void{
         //check whether user is logged in or not
         AuthenticationHelper.isLoggedIn().then((result: boolean)=> {
             if(result){
-                this.setAuthenticationRenderState(AuthenticationRenderState.NONE);
+                this.setAuthenticationRenderState(AuthenticationRenderState.REMINDER);
             }
             
-            this.setAuthenticationRenderState(AuthenticationRenderState.LOGIN);
+            //TODO: change back to login
+            this.setAuthenticationRenderState(AuthenticationRenderState.REMINDER);
         });
     }
 
@@ -33,11 +39,15 @@ export default class Authenticate extends Component<BaseProps, AuthenticationSta
     }
 
     render(){
-       switch(this.state.authenticationRenderState){
-           case AuthenticationRenderState.LOGIN:
-               return (
-                   <Login baseState={this.state} changeAuthenticationRenderState={this.setAuthenticationRenderState} />
-               );
+        switch(this.state.authenticationRenderState){
+            case AuthenticationRenderState.REMINDER:
+                return (
+                    <Reminder baseState={this.state} />
+                );
+            case AuthenticationRenderState.LOGIN:
+                return (
+                    <Login baseState={this.state} changeAuthenticationRenderState={this.setAuthenticationRenderState} />
+                );
 
             case AuthenticationRenderState.REGISTRATION:
                 return (
@@ -46,7 +56,7 @@ export default class Authenticate extends Component<BaseProps, AuthenticationSta
 
             default:
                 return null;
-       }
+        }
     }
 }
 
@@ -56,5 +66,6 @@ export default class Authenticate extends Component<BaseProps, AuthenticationSta
 export enum AuthenticationRenderState{
     LOGIN,
     REGISTRATION,
+    REMINDER,
     NONE
 }

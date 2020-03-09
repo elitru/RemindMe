@@ -6,8 +6,8 @@ export default class ThemeHolder {
      * @description array which contains all available color schemes
      */
     private themes: Theme[] = [
-        new Theme('default', '#FF6B35', '#004E89', '#fff', '#333', '#eee'),
-        new Theme('default_bad', '#20fc8f', '#19844e', '#fff', '#2d2d2a', '#3f5e5a')
+        new Theme('default', '#FF6B35', '#004E89', '#fff', '#333', '#eee', '#e7e7e7', '#e1e1e1', '#888', '#FF6B35'),
+        new Theme('default_bad', '#20fc8f', '#19844e', '#fff', '#2d2d2a', '#3f5e5a', '#fff', '#fff', '#333', '#20fc8f')
     ];
     /**
      * @description the active color theme
@@ -55,13 +55,21 @@ export class Theme{
     public readonly foreground_light: string;
     public readonly foreground_dark: string;
     public readonly background: string;
+    public readonly menubar: string;
+    public readonly menubar_border: string;
+    public readonly menubar_foreground: string;
+    public readonly menubar_foreground_active: string;
 
-    constructor(name: string, primary: string, secondary: string, foreground_light: string, foreground_dark: string, background: string){
+    constructor(name: string, primary: string, secondary: string, foreground_light: string, foreground_dark: string, background: string, menubar: string, menubar_border: string, menubar_foreground: string, menubar_foreground_active: string){
         this.name = name;
         this.primary = primary;
         this.secondary = secondary;
         this.foreground_light = foreground_light;
         this.foreground_dark = foreground_dark;
         this.background = background;
+        this.menubar = menubar;
+        this.menubar_border = menubar_border;
+        this.menubar_foreground = menubar_foreground;
+        this.menubar_foreground_active = menubar_foreground_active;
     }
 }

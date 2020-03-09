@@ -46,7 +46,7 @@ export default class Login extends React.Component<LoginProps, LoginState>{
      * @description event is fired when user clicks on login button
      */
     private onLogin(event: GestureResponderEvent): void{
-
+        this.state.changeAuthenticationRenderState!(AuthenticationRenderState.REMINDER);
     }
 
     /**

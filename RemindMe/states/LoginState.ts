@@ -14,7 +14,7 @@ export default class LoginState extends BaseState{
             isLoading: false,
             changeAuthenticationRenderState: changeAuthenticationRenderState,
             themeHolder: baseState.themeHolder,
-            style: baseState.style
+            style: baseState.style,
         };
     }
 }
