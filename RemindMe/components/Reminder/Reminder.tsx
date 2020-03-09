@@ -4,6 +4,8 @@ import { View, Text, TouchableOpacity } from "react-native";
 import ReminderProps from "./../../props/ReminderProps";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCalendarAlt, faPlusSquare, faCogs } from '@fortawesome/free-solid-svg-icons';
+import ReminderItem from "./ReminderItem";
+import ReminderHolder, { Person } from "./../../models/ReminderHolder";
 
 export default class Reminder extends Component<ReminderProps, ReminderState>{
     public static readonly MENU_ICON_SIZE: number = 27;
@@ -18,7 +20,7 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
             <>
                 <View style={this.state.style.reminderContainer}>
                     <View style={this.state.style.reminderContent}>
-                        
+                        <ReminderItem baseState={this.state} reminder={new ReminderHolder(new Person('Elias', 'Trummer', 'elitru', new Date(2002, 10, 17)), require('./../../assets/images/reminder-icons/boy_1.png'))} />
                     </View>
                     {this.renderMenu()}
                 </View>
@@ -73,6 +75,9 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
     }
 }
 
+/**
+ * @description possible render states of the reminder activity
+ */
 export enum ReminderRenderState{
     REMINDERS,
     ADD_REMINDER,

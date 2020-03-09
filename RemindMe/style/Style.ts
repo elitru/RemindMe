@@ -118,7 +118,8 @@ export default class Style{
       reminderContent: {
         display: 'flex',
         width: '100%',
-        flexGrow: 1
+        flexGrow: 1,
+        overflow: 'scroll'
       },
       reminderMenu: {
         width: '100%',
@@ -142,6 +143,27 @@ export default class Style{
       },
       reminderMenuItemIconActive: {
         color: theme.menubar_foreground_active
+      },
+      reminderItemContainer: {
+        width: '100%',
+        height: 90,
+        backgroundColor: theme.reminder_item_background,
+        borderBottomColor: theme.reminder_item_border,
+        borderBottomWidth: 1,
+        borderStyle: 'solid',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        alignContent: 'center',
+        flexDirection: 'row'
+      },
+      reminderItemIcon: {
+        width: 60,
+        height: 60,
+        marginLeft: '5%',
+      },
+      reminderItemTextContainer: {
+        marginLeft: '5%'
       },
       defaultInputDark: {
         marginTop: 10,

@@ -42,3 +42,20 @@ class App extends React.Component<any, BaseState>{
 }
 
 export default App;
+
+/**
+ * Icons: flaticon.com
+ * Credits:
+ *    --> https://www.flaticon.com/de/autoren/freepik
+ *        - baby.svg
+ *        - girl_1.svg
+ *        - girl_2.svg
+ *        - girl_3.svg
+ *        - boy_1.svg
+ *        - boy_2.svg
+ *        - boy_3.svg
+ *        - grandma_1.svg
+ *        - grandma_2.svg
+ *        - grandpa_1.svg
+ * 
+ */
