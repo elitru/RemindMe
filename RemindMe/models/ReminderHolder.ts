@@ -1,8 +1,10 @@
 export default class ReminderHolder{
+    public id: string;
     public person: Person;
     public icon: any;
 
-    constructor(person: Person, icon: any){
+    constructor(id: string, person: Person, icon: any){
+        this.id = id;
         this.person = person;
         this.icon = icon;
     }
@@ -11,13 +13,11 @@ export default class ReminderHolder{
 export class Person{
     public firstname: string;
     public lastname: string;
-    public nickname: string;
     public birthdate: Date;
 
-    constructor(firstname: string, lastname: string, nickname: string, birthdate: Date){
+    constructor(firstname: string, lastname: string, birthdate: Date){
         this.firstname = firstname;
         this.lastname = lastname;
-        this.nickname = nickname;
         this.birthdate = birthdate;
     }
 }

@@ -6,8 +6,7 @@ export default class ThemeHolder {
      * @description array which contains all available color schemes
      */
     private themes: Theme[] = [
-        new Theme('default', '#FF6B35', '#004E89', '#fff', '#333', '#eee', '#e7e7e7', '#e1e1e1', '#888', '#FF6B35', '#ececec', '#dadada'),
-        new Theme('default_bad', '#20fc8f', '#19844e', '#fff', '#2d2d2a', '#3f5e5a', '#fff', '#fff', '#333', '#20fc8f', '#fff', '#dadada')
+        new Theme('default', '#FF6B35', '#004E89', '#fff', '#333', '#eee', '#e7e7e7', '#e1e1e1', '#888', '#FF6B35', '#ececec', '#dadada', '#444', '#666', '#e56565')
     ];
     /**
      * @description the active color theme
@@ -61,6 +60,9 @@ export class Theme{
     public readonly menubar_foreground_active: string;
     public readonly reminder_item_background: string;
     public readonly reminder_item_border: string;
+    public readonly reminder_item_name: string;
+    public readonly reminder_item_birthdate: string;
+    public readonly reminder_item_delete_background: string;
 
     constructor(name: string, 
         primary: string, 
@@ -73,7 +75,10 @@ export class Theme{
         menubar_foreground: string, 
         menubar_foreground_active: string,
         reminder_item_background: string,
-        reminder_item_border: string){
+        reminder_item_border: string,
+        reminder_item_name: string,
+        reminder_item_birthdate: string,
+        reminder_item_delete_background: string){
         this.name = name;
         this.primary = primary;
         this.secondary = secondary;
@@ -86,5 +91,8 @@ export class Theme{
         this.menubar_foreground_active = menubar_foreground_active;
         this.reminder_item_background = reminder_item_background;
         this.reminder_item_border = reminder_item_border;
+        this.reminder_item_name = reminder_item_name;
+        this.reminder_item_birthdate = reminder_item_birthdate;
+        this.reminder_item_delete_background = reminder_item_delete_background;
     }
 }

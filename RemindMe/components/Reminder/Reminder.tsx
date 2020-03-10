@@ -1,31 +1,69 @@
 import React, { Component } from "react";
 import ReminderState from "./../../states/ReminderState";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, ScrollView } from "react-native";
 import ReminderProps from "./../../props/ReminderProps";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCalendarAlt, faPlusSquare, faCogs } from '@fortawesome/free-solid-svg-icons';
 import ReminderItem from "./ReminderItem";
 import ReminderHolder, { Person } from "./../../models/ReminderHolder";
+import IconHelper from "./../../utils/IconHelper";
+import ReminderHelper from "./../../utils/ReminderHelper";
 
 export default class Reminder extends Component<ReminderProps, ReminderState>{
     public static readonly MENU_ICON_SIZE: number = 27;
 
     constructor(props: any){
         super(props);
-        this.state = ReminderState.fromBaseState(props.baseState, this.setReminderRenderState);
+        this.state = ReminderState.fromBaseState(props.baseState, this.setReminderRenderState, []);
+
+        //bind functions
+        this.deleteReminder = this.deleteReminder.bind(this);
+    }
+
+    componentDidMount(): void{
+        const state: ReminderState = this.state;
+        ReminderHelper.getAllLocal().then((reminders: ReminderHolder[]) => {
+            
+        });
     }
 
     render(){
         return(
             <>
                 <View style={this.state.style.reminderContainer}>
-                    <View style={this.state.style.reminderContent}>
-                        <ReminderItem baseState={this.state} reminder={new ReminderHolder(new Person('Elias', 'Trummer', 'elitru', new Date(2002, 10, 17)), require('./../../assets/images/reminder-icons/boy_1.png'))} />
-                    </View>
+                    <ScrollView style={this.state.style.reminderContent}>
+                        {
+                            this.state.reminders.map((reminder: ReminderHolder) => { return (
+                                <ReminderItem key={reminder.id} baseState={this.state} reminder={reminder} deleteReminder={this.deleteReminder} />
+                            )})
+                        }
+                    </ScrollView>
                     {this.renderMenu()}
                 </View>
             </>
         );
+    }
+
+    /**
+     * @description delets a reminder from the list view
+     * @todo also make request to server to delete reminder there
+     */
+    public deleteReminder(reminder: ReminderHolder): void{
+        const state: ReminderState = this.state;
+        for(let i = 0; i < state.reminders.length; i++){
+            if(state.reminders[i] == reminder){
+                state.reminders.splice(i, 1);
+                this.setState(state);
+                return;
+            }
+        }
+    }
+
+    /**
+     * @description adds a new reminder
+     */
+    public addReminder(reminder: ReminderHolder): void{
+        
     }
 
     /**
