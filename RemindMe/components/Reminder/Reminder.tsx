@@ -8,13 +8,18 @@ import ReminderItem from "./ReminderItem";
 import ReminderHolder, { Person } from "./../../models/ReminderHolder";
 import IconHelper from "./../../utils/IconHelper";
 import ReminderHelper from "./../../utils/ReminderHelper";
+import ReminderEditor from "./ReminderEditor";
 
 export default class Reminder extends Component<ReminderProps, ReminderState>{
     public static readonly MENU_ICON_SIZE: number = 27;
 
     constructor(props: any){
         super(props);
-        this.state = ReminderState.fromBaseState(props.baseState, this.setReminderRenderState, []);
+        this.state = ReminderState.fromBaseState(props.baseState, this.setReminderRenderState, [
+            //new ReminderHolder('0d72597a-6371-463d-87e3-1fe3f0d38d1a', new Person('Denis', 'Imeri', new Date(2003, 6, 23)), IconHelper.NAMES.BOY_1),
+            //new ReminderHolder('5b284ab0-1e59-4218-971e-921dc27243c0', new Person('Paul', 'Weiß', new Date(2002, 12, 18)), IconHelper.NAMES.BOY_2),
+            //new ReminderHolder('fd910678-6e8d-4905-a4a9-dfe83e082307', new Person('Elias', 'Wilfinger', new Date(2002, 12, 1)), IconHelper.NAMES.BOY_3)
+        ]);
 
         //bind functions
         this.deleteReminder = this.deleteReminder.bind(this);
@@ -23,7 +28,8 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
     componentDidMount(): void{
         const state: ReminderState = this.state;
         ReminderHelper.getAllLocal().then((reminders: ReminderHolder[]) => {
-            
+            state.reminders = reminders;
+            this.setState(state);
         });
     }
 
@@ -31,13 +37,7 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
         return(
             <>
                 <View style={this.state.style.reminderContainer}>
-                    <ScrollView style={this.state.style.reminderContent}>
-                        {
-                            this.state.reminders.map((reminder: ReminderHolder) => { return (
-                                <ReminderItem key={reminder.id} baseState={this.state} reminder={reminder} deleteReminder={this.deleteReminder} />
-                            )})
-                        }
-                    </ScrollView>
+                    
                     {this.renderMenu()}
                 </View>
             </>
@@ -54,6 +54,7 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
             if(state.reminders[i] == reminder){
                 state.reminders.splice(i, 1);
                 this.setState(state);
+                ReminderHelper.saveToLocal(state.reminders);
                 return;
             }
         }
@@ -73,6 +74,26 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
         const state: ReminderState = this.state;
         state.reminderRenderState = reminderState;
         this.setState(state);
+    }
+
+    private renderContent(){
+        switch(this.state.reminderRenderState){
+            case ReminderRenderState.REMINDERS:
+                return (
+                    <ScrollView style={this.state.style.reminderContent}>
+                        {
+                            this.state.reminders.map((reminder: ReminderHolder) => { return (
+                                <ReminderItem key={reminder.id} baseState={this.state} reminder={reminder} deleteReminder={this.deleteReminder} />
+                            )})
+                        }
+                    </ScrollView>
+                );
+
+            case ReminderRenderState.ADD_REMINDER:
+                return (
+                    <ReminderEditor />
+                );
+        }
     }
 
     /**

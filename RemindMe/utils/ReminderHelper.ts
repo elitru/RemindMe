@@ -1,4 +1,4 @@
-import ReminderHolder from "models/ReminderHolder";
+import ReminderHolder from "./../models/ReminderHolder";
 import { AsyncStorage } from "react-native";
 
 export default class ReminderHelper{
@@ -12,16 +12,14 @@ export default class ReminderHelper{
      */
     public static async getAllLocal(): Promise<ReminderHolder[]>{
         try{
-            const result = await AsyncStorage.getItem(ReminderHelper.REMINDERS_KEY);
+            const result: string | null = await AsyncStorage.getItem(ReminderHelper.REMINDERS_KEY);
             if(result == null || result == undefined || result.length <= 0){
                 return [];
             }
             
-            //TODO: parse to real objects
-            let data: any[] = JSON.parse(result);
-            //data = data.map(e => )
-
-            return [];
+            //console.log(result)
+            const raw: string[] = JSON.parse(result);
+            return raw.map(entry => ReminderHolder.parse(entry));
 
         }catch(err){
             return [];
@@ -33,7 +31,9 @@ export default class ReminderHelper{
      */
     public static async saveToLocal(reminders: ReminderHolder[]): Promise<boolean>{
         try{
-            await AsyncStorage.setItem(ReminderHelper.REMINDERS_KEY, JSON.stringify(reminders));
+            const data: string = JSON.stringify(reminders.map(entry => ReminderHolder.storage(JSON.parse(JSON.stringify(entry)))));
+            
+            await AsyncStorage.setItem(ReminderHelper.REMINDERS_KEY, data);
             return true;
         }catch(err){
             return false;
