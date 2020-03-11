@@ -23,6 +23,7 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
 
         //bind functions
         this.deleteReminder = this.deleteReminder.bind(this);
+        this.renderContent = this.renderContent.bind(this);
     }
 
     componentDidMount(): void{
@@ -37,7 +38,9 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
         return(
             <>
                 <View style={this.state.style.reminderContainer}>
-                    
+                    <ScrollView style={this.state.style.reminderContent}>
+                        {this.renderContent()}
+                    </ScrollView>
                     {this.renderMenu()}
                 </View>
             </>
@@ -76,23 +79,29 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
         this.setState(state);
     }
 
+    /**
+     * @description returns the content according on the selected menu item
+     */
     private renderContent(){
         switch(this.state.reminderRenderState){
             case ReminderRenderState.REMINDERS:
                 return (
-                    <ScrollView style={this.state.style.reminderContent}>
+                    <>
                         {
                             this.state.reminders.map((reminder: ReminderHolder) => { return (
                                 <ReminderItem key={reminder.id} baseState={this.state} reminder={reminder} deleteReminder={this.deleteReminder} />
                             )})
                         }
-                    </ScrollView>
+                    </>
                 );
 
             case ReminderRenderState.ADD_REMINDER:
                 return (
-                    <ReminderEditor />
+                    <ReminderEditor baseState={this.state} reminder={null} />
                 );
+
+            default:
+                return null;
         }
     }
 

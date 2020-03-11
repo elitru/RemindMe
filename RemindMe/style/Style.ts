@@ -176,6 +176,41 @@ export default class Style{
         paddingTop: 2,
         color: theme.reminder_item_birthdate
       },
+      reminderEditorContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        alignContent: 'flex-start',
+        backgroundColor: theme.background,
+        paddingLeft: 30,
+        paddingRight: 30
+      },
+      reminderEditorHeadline: {
+        fontFamily: 'OpenSans-SemiBold',
+        textAlign: 'left',
+        fontSize: 28,
+        color: theme.editor_headline,
+        paddingTop: 25
+      },
+      reminderEditorInput: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginHorizontal: 'auto',
+        width: '80%',
+        height: 'auto',
+        fontSize: 18,
+        textAlign: 'left',
+        color: theme.foreground_dark,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 12,
+        paddingRight: 12,
+        borderBottomColor: theme.foreground_dark,
+        borderBottomWidth: 1
+      },
       defaultInputDark: {
         marginTop: 10,
         marginBottom: 10,

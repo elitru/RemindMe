@@ -20,8 +20,10 @@ import ThemeHolder from './style/ThemeHolder';
 import BaseState from './states/BaseState';
 import Authenticate from './components/Authenticate/Authenticate';
 import Reminder from './components/Reminder/Reminder';
+import { Buffer } from 'buffer';
 
-declare var global: {HermesInternal: null | {}};
+declare var global: {HermesInternal: null | {}, Buffer: any};
+global.Buffer = Buffer;
 
 class App extends React.Component<any, BaseState>{
 
