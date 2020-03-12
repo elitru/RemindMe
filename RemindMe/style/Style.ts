@@ -22,21 +22,44 @@ export default class Style{
         justifyContent: 'center',
         position: 'relative'
       },
+      loginGradient: {
+        width: '100%',
+        height: '100%'
+      },
       loginContainer: {
         width: '100%',
         height: '100%',
         display: 'flex',
-        backgroundColor: theme.background,
+        paddingHorizontal: 40,
         flexDirection: 'column',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        alignContent: 'center',
+        textAlignVertical: 'center',
+        alignSelf: 'center'
+      },
+      loginHeadlineContainer: {
+        display: 'flex',
+        width: '100%',
+        flexGrow: 2,
+        justifyContent: 'center',
+        textAlign: 'left',
+        flexDirection: 'column'
       },
       loginHeadline: {
-        color: theme.primary,
-        fontSize: 60,
-        fontFamily: 'Anton-Regular',
-        textAlign: 'center',
-        paddingTop: 30,
-        paddingBottom: 30
+        color: theme.login_headline,
+        fontSize: 50,
+        fontFamily: 'Roboto-Bold',
+        textAlign: 'left',
+        paddingTop: 10
+      },
+      loginSubHeadline: {
+        color: theme.login_headline,
+        fontSize: 20,
+        fontFamily: 'Roboto-Regular',
+        textAlign: 'left',
+        paddingTop: 10,
+        paddingBottom: 20
       },
       loginInputContainer: {
         textAlign: "center",
@@ -47,44 +70,43 @@ export default class Style{
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        backgroundColor: '#fff',
+        flexGrow: 0,
+        paddingHorizontal: 35,
+        paddingTop: 35,
+        paddingBottom: 45,
+        borderRadius: 10
       },
       loginItemContainer: {
-        width: '80%',
+        width: '100%',
         height: 'auto',
         marginTop: 40
       },
-      registerContainer: {
+      loginInput: {
+        marginTop: 10,
+        marginBottom: 10,
+        marginHorizontal: 'auto',
         width: '100%',
-        height: '100%',
-        display: 'flex',
-        backgroundColor: theme.background,
-        flexDirection: 'column',
-        justifyContent: 'space-evenly'
+        height: 'auto',
+        fontSize: 18,
+        textAlign: 'left',
+        color: theme.login_input,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 12,
+        paddingRight: 12,
+        borderBottomColor: theme.login_input,
+        borderBottomWidth: 1,
+        fontFamily: 'OpenSans-Regular'
       },
-      registerHeadline: {
-        color: theme.primary,
-        fontSize: 60,
-        fontFamily: 'Anton-Regular',
+      loginLink: {
+        fontSize: 15,
+        color: theme.login_link,
         textAlign: 'center',
-        paddingTop: 30,
-        paddingBottom: 30
-      },
-      registerInputContainer: {
-        textAlign: "center",
-        width: '100%',
-        height: 'auto',
-        margin: 'auto',
-        display: 'flex',
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center'
-      },
-      registerItemContainer: {
-        width: '80%',
-        height: 'auto',
-        marginTop: 40
+        fontFamily: 'Roboto-Light',
+        paddingTop: 20,
+        paddingBottom: 10
       },
       loaderContainer: {
         position: 'absolute',
@@ -112,13 +134,18 @@ export default class Style{
         justifyContent: 'space-between',
         alignItems: 'center',
         alignContent: 'center',
-        backgroundColor: theme.background,
+        //backgroundColor: theme.background,
         flexDirection: 'column'
+      },
+      reminderGradient: {
+        display: 'flex',
+        width: '100%',
+        flexGrow: 1,
       },
       reminderContent: {
         display: 'flex',
         width: '100%',
-        flexGrow: 1,
+        flexGrow: 1
       },
       reminderMenu: {
         width: '100%',
@@ -132,7 +159,8 @@ export default class Style{
         alignItems: 'center',
         alignContent: 'center',
         flexDirection: 'row',
-        textAlign: 'center'
+        textAlign: 'center',
+        zIndex: 1000
       },
       reminderMenuItem: {
         
@@ -146,16 +174,26 @@ export default class Style{
       reminderItemContainer: {
         width: '100%',
         height: 90,
-        borderBottomColor: theme.reminder_item_border,
-        borderBottomWidth: 1,
         borderStyle: 'solid',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        flexDirection: 'row',
+        position: 'relative',
+        zIndex: 2,
+        marginTop: 10
+      },
+      reminderItemContent: {
+        width: '94%',
+        height: '100%',
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
         alignContent: 'center',
         flexDirection: 'row',
         position: 'relative',
-        zIndex: 2
+        borderRadius: 8
       },
       reminderItemIcon: {
         width: 60,
@@ -196,22 +234,6 @@ export default class Style{
         paddingTop: 25
       },
       reminderEditorInput: {
-        marginTop: 10,
-        marginBottom: 10,
-        marginHorizontal: 'auto',
-        width: '80%',
-        height: 'auto',
-        fontSize: 18,
-        textAlign: 'left',
-        color: theme.foreground_dark,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 12,
-        paddingRight: 12,
-        borderBottomColor: theme.foreground_dark,
-        borderBottomWidth: 1
-      },
-      defaultInputDark: {
         marginTop: 10,
         marginBottom: 10,
         marginHorizontal: 'auto',

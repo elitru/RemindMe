@@ -4,6 +4,7 @@ import { Text, View, TextInput, Button, TouchableOpacity, GestureResponderEvent,
 import Loader from '../../loader/Loader';
 import LoginProps from './../../../props/LoginProps';
 import { AuthenticationRenderState } from '../Authenticate';
+import LinearGradient from 'react-native-linear-gradient'
 
 export default class Login extends React.Component<LoginProps, LoginState>{
     constructor(props: any){
@@ -63,23 +64,28 @@ export default class Login extends React.Component<LoginProps, LoginState>{
             <>
                 { this.state.isLoading ? <Loader baseState={this.props.baseState} isVisible={true} /> : null}
                 { this.state.isLoading ? null :
-                    <View style={this.state.style.loginContainer}>
-                        <Text style={this.state.style.loginHeadline}>Remind Me</Text>
-                        <View style={this.state.style.loginInputContainer}>
-                            <TextInput placeholder="Username" style={[this.state.style.defaultInputDark, this.state.style.spaceBottom]} onChangeText={this.onUsernameChanged} />
-                            <TextInput placeholder="Password" style={this.state.style.defaultInputDark} secureTextEntry={true} onChangeText={this.onPasswordChanged} />
-                            <View style={this.state.style.loginItemContainer}>
-                                <TouchableOpacity onPress={this.onLogin} style={this.state.style.defaultButtonPrimary}>
-                                    <Text style={this.state.style.defaultButtonPrimaryText}>Login</Text>
-                                </TouchableOpacity>
+                    <LinearGradient start={{x: 0, y: 1}} end={{x: 0, y: 0}} style={this.state.style.loginGradient} colors={[this.state.themeHolder.getTheme().secondary, this.state.themeHolder.getTheme().primary]}>
+                        <View style={this.state.style.loginContainer}>
+                            <View style={this.state.style.loginHeadlineContainer}>
+                                <Text style={this.state.style.loginHeadline}>Hello There.</Text>
+                                <Text style={this.state.style.loginSubHeadline}>Login in or sign up to continue.</Text>
                             </View>
-                            <View style={[this.state.style.spaceTop, this.state.style.loginItemContainer]}>
+                            <View style={[this.state.style.loginInputContainer]}>
+                                <TextInput placeholder="Username" style={[this.state.style.loginInput, this.state.style.spaceBottom, {marginTop: 0}]} onChangeText={this.onUsernameChanged} />
+                                <TextInput placeholder="Password" style={this.state.style.loginInput} secureTextEntry={true} onChangeText={this.onPasswordChanged} />
+                                <View style={this.state.style.loginItemContainer}>
+                                    <TouchableOpacity onPress={this.onLogin} style={this.state.style.defaultButtonPrimary}>
+                                        <Text style={this.state.style.defaultButtonPrimaryText}>Login</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <View style={[this.state.style.loginItemContainer, {flexGrow: 0, paddingBottom: 30}]}>
                                 <TouchableOpacity onPress={this.onGoToRegister}>
-                                    <Text style={this.state.style.defaultLink}>You don't have an account yet?{'\n'}Register <Text style={this.state.style.colorPrimary}>here</Text></Text>
+                                    <Text style={this.state.style.loginLink}>You don't have an account yet?{'\n'}Register <Text style={this.state.style.colorPrimary}>here</Text></Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
-                    </View>
+                    </LinearGradient>
                 }
             </>
         );

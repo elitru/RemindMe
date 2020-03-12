@@ -6,7 +6,8 @@ export default class ThemeHolder {
      * @description array which contains all available color schemes
      */
     private themes: Theme[] = [
-        new Theme('default', '#FF6B35', '#004E89', '#fff', '#333', '#eee', '#e7e7e7', '#e1e1e1', '#888', '#FF6B35', '#ececec', '#dadada', '#444', '#666', '#e56565', '#FF6B35')
+        new Theme('default', '#8B71F7', '#68C2F8', '#fff', '#333', '#eee', '#fff', '#bdbdbd', '#eee', '#fff', '#fff', '#666', '#8B71F7', 'rgba(255, 255, 255, .8)', '#dadada', '#444', '#666', '#e56565', '#8B71F7'),
+        new Theme('default_old', '#FF6B35', '#004E89', '#fff', '#333', '#eee', '#FF6B35', '#555', '#333', '#e7e7e7', '#e1e1e1', '#888', '#FF6B35', '#ececec', '#dadada', '#444', '#666', '#e56565', '#FF6B35')
     ];
     /**
      * @description the active color theme
@@ -54,6 +55,9 @@ export class Theme{
     public readonly foreground_light: string;
     public readonly foreground_dark: string;
     public readonly background: string;
+    public readonly login_headline: string;
+    public readonly login_input: string;
+    public readonly login_link: string;
     public readonly menubar: string;
     public readonly menubar_border: string;
     public readonly menubar_foreground: string;
@@ -71,6 +75,9 @@ export class Theme{
         foreground_light: string, 
         foreground_dark: string, 
         background: string, 
+        login_headline: string,
+        login_input: string,
+        login_link: string,
         menubar: string, 
         menubar_border: string, 
         menubar_foreground: string, 
@@ -87,6 +94,9 @@ export class Theme{
         this.foreground_light = foreground_light;
         this.foreground_dark = foreground_dark;
         this.background = background;
+        this.login_headline = login_headline;
+        this.login_input = login_input;
+        this.login_link = login_link;
         this.menubar = menubar;
         this.menubar_border = menubar_border;
         this.menubar_foreground = menubar_foreground;

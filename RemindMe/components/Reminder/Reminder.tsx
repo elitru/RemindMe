@@ -9,6 +9,7 @@ import ReminderHolder, { Person } from "./../../models/ReminderHolder";
 import IconHelper from "./../../utils/IconHelper";
 import ReminderHelper from "./../../utils/ReminderHelper";
 import ReminderEditor from "./ReminderEditor";
+import LinearGradient from "react-native-linear-gradient";
 
 export default class Reminder extends Component<ReminderProps, ReminderState>{
     public static readonly MENU_ICON_SIZE: number = 27;
@@ -38,9 +39,11 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
         return(
             <>
                 <View style={this.state.style.reminderContainer}>
-                    <ScrollView style={this.state.style.reminderContent}>
-                        {this.renderContent()}
-                    </ScrollView>
+                    <LinearGradient start={{x: 0, y: 1}} end={{x: 0, y: 0}} style={this.state.style.reminderGradient} colors={[this.state.themeHolder.getTheme().secondary, this.state.themeHolder.getTheme().primary]}>
+                        <ScrollView style={this.state.style.reminderContent} contentContainerStyle={{justifyContent: 'center'}}>
+                            {this.renderContent()}
+                        </ScrollView>
+                    </LinearGradient>
                     {this.renderMenu()}
                 </View>
             </>
