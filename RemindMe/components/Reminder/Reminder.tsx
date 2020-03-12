@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReminderState from "./../../states/ReminderState";
-import { View, Text, TouchableOpacity, FlatList, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, ScrollView, Image } from "react-native";
 import ReminderProps from "./../../props/ReminderProps";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCalendarAlt, faPlusSquare, faCogs } from '@fortawesome/free-solid-svg-icons';
@@ -25,6 +25,7 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
         //bind functions
         this.deleteReminder = this.deleteReminder.bind(this);
         this.renderContent = this.renderContent.bind(this);
+        this.menuItemBackground = this.menuItemBackground.bind(this);
     }
 
     componentDidMount(): void{
@@ -43,8 +44,8 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
                         <ScrollView style={this.state.style.reminderContent} contentContainerStyle={{justifyContent: 'center'}}>
                             {this.renderContent()}
                         </ScrollView>
+                        {this.renderMenu()}
                     </LinearGradient>
-                    {this.renderMenu()}
                 </View>
             </>
         );
@@ -102,7 +103,7 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
                 return (
                     <ReminderEditor baseState={this.state} reminder={null} />
                 );
-
+                    
             default:
                 return null;
         }
@@ -115,34 +116,37 @@ export default class Reminder extends Component<ReminderProps, ReminderState>{
         return (
             <View style={this.state.style.reminderMenu}>
                 <TouchableOpacity 
-                style={this.state.style.reminderMenuItem}
-                onPress={(e) => this.setReminderRenderState(ReminderRenderState.REMINDERS)}>
-                    <FontAwesomeIcon icon={faCalendarAlt} 
-                    size={Reminder.MENU_ICON_SIZE} 
-                    style={this.state.reminderRenderState == ReminderRenderState.REMINDERS ? 
-                        this.state.style.reminderMenuItemIconActive :
-                        this.state.style.reminderMenuItemIcon} />
+                    style={[this.state.style.reminderMenuItem, {backgroundColor: this.menuItemBackground(ReminderRenderState.REMINDERS)}]}
+                    onPress={(e) => this.setReminderRenderState(ReminderRenderState.REMINDERS)}>
+                    <Image 
+                        style={[this.state.style.reminderMenuItemImage]} 
+                        source={require('./../../assets/images/menu/bell.png')} />
                 </TouchableOpacity>
                 <TouchableOpacity 
-                style={this.state.style.reminderMenuItem}
-                onPress={(e) => this.setReminderRenderState(ReminderRenderState.ADD_REMINDER)}>
-                    <FontAwesomeIcon icon={faPlusSquare} 
-                    size={Reminder.MENU_ICON_SIZE} 
-                    style={this.state.reminderRenderState == ReminderRenderState.ADD_REMINDER ? 
-                        this.state.style.reminderMenuItemIconActive :
-                        this.state.style.reminderMenuItemIcon} />
+                    style={[this.state.style.reminderMenuItem, {backgroundColor: this.menuItemBackground(ReminderRenderState.ADD_REMINDER)}]}
+                    onPress={(e) => this.setReminderRenderState(ReminderRenderState.ADD_REMINDER)}>
+                    <Image 
+                        style={[this.state.style.reminderMenuItemImage]} 
+                        source={require('./../../assets/images/menu/plus.png')} />
                 </TouchableOpacity>
                 <TouchableOpacity 
-                style={this.state.style.reminderMenuItem}
-                onPress={(e) => this.setReminderRenderState(ReminderRenderState.SETTINGS)}>
-                    <FontAwesomeIcon icon={faCogs} 
-                    size={Reminder.MENU_ICON_SIZE} 
-                    style={this.state.reminderRenderState == ReminderRenderState.SETTINGS ? 
-                        this.state.style.reminderMenuItemIconActive :
-                        this.state.style.reminderMenuItemIcon} />
+                    style={[this.state.style.reminderMenuItem, {backgroundColor: this.menuItemBackground(ReminderRenderState.SETTINGS)}]}
+                    onPress={(e) => this.setReminderRenderState(ReminderRenderState.SETTINGS)}>
+                    <Image 
+                        style={[this.state.style.reminderMenuItemImage]} 
+                        source={require('./../../assets/images/menu/gear.png')} />
                 </TouchableOpacity>
             </View>
         );
+    }
+
+    /**
+     * @description returns the background color of a menu item to define to show user which menu item is currently selected
+     */
+    private menuItemBackground(renderState: ReminderRenderState) {
+        return this.state.reminderRenderState == renderState ?
+            this.state.themeHolder.getTheme().menubar_background_active :
+            this.state.themeHolder.getTheme().menubar_background;
     }
 }
 

@@ -131,16 +131,15 @@ export default class Style{
         width: '100%',
         height: '100%',
         display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        alignContent: 'center',
-        //backgroundColor: theme.background,
-        flexDirection: 'column'
       },
       reminderGradient: {
         display: 'flex',
         width: '100%',
         flexGrow: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignContent: 'center',
+        flexDirection: 'column'
       },
       reminderContent: {
         display: 'flex',
@@ -150,26 +149,31 @@ export default class Style{
       reminderMenu: {
         width: '100%',
         height: 65,
-        backgroundColor: theme.menubar,
-        borderTopColor: theme.menubar_border,
-        borderStyle: 'solid',
-        borderTopWidth: 1,
         display: 'flex',
-        justifyContent: 'space-around',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         alignContent: 'center',
         flexDirection: 'row',
         textAlign: 'center',
-        zIndex: 1000
+        zIndex: 1000,
+        marginBottom: 20
       },
       reminderMenuItem: {
-        
+        width: 60,
+        height: 60,
+        backgroundColor: theme.menubar_background,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        borderRadius: 20,
+        borderStyle: 'solid',
+        borderWidth: 2,
+        borderColor: '#fff'
       },
-      reminderMenuItemIcon: {
-        color: theme.menubar_foreground
-      },
-      reminderMenuItemIconActive: {
-        color: theme.menubar_foreground_active
+      reminderMenuItemImage: {
+        width: 30,
+        height: 30
       },
       reminderItemContainer: {
         width: '100%',
@@ -205,7 +209,7 @@ export default class Style{
       },
       reminderItemName: {
         fontSize: 20,
-        fontFamily: 'OpenSans-SemiBold',
+        fontFamily: 'Roboto-Regular',
         color: theme.reminder_item_name
       },
       reminderItemBirthdate: {
@@ -222,32 +226,56 @@ export default class Style{
         justifyContent: 'center',
         alignItems: 'flex-start',
         alignContent: 'flex-start',
-        backgroundColor: theme.background,
         paddingLeft: 30,
         paddingRight: 30
       },
       reminderEditorHeadline: {
-        fontFamily: 'OpenSans-SemiBold',
+        fontFamily: 'Roboto-Medium',
         textAlign: 'left',
-        fontSize: 28,
+        fontSize: 45,
         color: theme.editor_headline,
-        paddingTop: 25
+        paddingTop: 25,
+        paddingBottom: 10
       },
       reminderEditorInput: {
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: 20,
+        marginBottom: 15,
         marginHorizontal: 'auto',
-        width: '80%',
+        width: '100%',
         height: 'auto',
         fontSize: 18,
         textAlign: 'left',
-        color: theme.foreground_dark,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 12,
-        paddingRight: 12,
-        borderBottomColor: theme.foreground_dark,
-        borderBottomWidth: 1
+        color: theme.editor_color,
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 14,
+        paddingRight: 14,
+        borderColor: theme.editor_color,
+        borderWidth: 2,
+        borderRadius: 10,
+        fontFamily: 'Roboto-Regular'
+      },
+      ReminderEditorBirthdate: {
+        marginTop: 20,
+        marginBottom: 15,
+        marginHorizontal: 'auto',
+        width: '100%',
+        height: 'auto',
+        color: theme.editor_color,
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 14,
+        paddingRight: 14,
+        borderColor: theme.editor_color,
+        borderWidth: 2,
+        textAlign: 'left',
+        borderRadius: 10,
+        fontFamily: 'Roboto-Regular'
+      },
+      ReminderEditorBirthdateText: {
+        fontSize: 18,
+        textAlign: 'left',
+        paddingVertical: 2
       },
       defaultButtonPrimary: {
         width: '100%',

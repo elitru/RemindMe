@@ -7,7 +7,7 @@ export default class ReminderState extends BaseState{
     public changeReminderState: ((reminderState: ReminderRenderState) => void) | undefined;
     public reminders: ReminderHolder[] = [];
 
-    public static fromBaseState(baseState: BaseState, changeReminderState: (reminderState: ReminderRenderState) => void, reminders: ReminderHolder[] = [], reminderRenderState: ReminderRenderState = ReminderRenderState.REMINDERS): ReminderState{
+    public static fromBaseState(baseState: BaseState, changeReminderState: (reminderState: ReminderRenderState) => void, reminders: ReminderHolder[] = [], reminderRenderState: ReminderRenderState = ReminderRenderState.ADD_REMINDER): ReminderState{
         return {
             themeHolder: baseState.themeHolder,
             style: baseState.style,

@@ -11,7 +11,7 @@ export default class ReminderEditorState extends BaseState{
         return {
             themeHolder: baseState.themeHolder,
             style: baseState.style,
-            reminder: reminder == null ? new ReminderHolder(UUID.v4(), new Person('', '', new Date()), IconHelper.NAMES.BABY) : reminder,
+            reminder: reminder == null ? new ReminderHolder(UUID.v4(), new Person('', '', new Date(1, 1, 1)), IconHelper.NAMES.BABY) : reminder,
             isDatePickerVisible: false
         };
     }
