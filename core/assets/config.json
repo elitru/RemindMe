@@ -1,0 +1,14 @@
+{
+  "port": 80,
+  "log_level": 0,
+  "database_config": {
+    "host": "localhost",
+    "port": 5432,
+    "user": "postgres",
+    "password": "admin",
+    "database": "remind_me"
+  },
+  "jwt_config": {
+    "secret": "bswognlxbgtiizbkvccinqiwyyqzylraeyfdeiozsejbyhpnippqmrywflzphllt"
+  }
+}
