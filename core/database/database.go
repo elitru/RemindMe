@@ -2,10 +2,13 @@ package database
 
 import (
 	"RemindMe/config"
+	queryReader "RemindMe/database/query_reader"
+	"RemindMe/database/repositories"
 	"RemindMe/errors"
 	"RemindMe/logger"
 	"database/sql"
 	"fmt"
+	_ "github.com/lib/pq"
 )
 
 var connection *sql.DB = nil
@@ -13,21 +16,15 @@ var connection *sql.DB = nil
 //opens up a connection to the postgres database
 func connect() {
 	if connection != nil {
-		logger.Debug("Could not connect to database as there is already an open connection")
 		return
 	}
-
-	logger.Debug("Bulding database connection string")
-
-	connectionString := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+	
+	connectionString := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
 		config.Config().DatabaseConfig.Host,
 		config.Config().DatabaseConfig.User,
 		config.Config().DatabaseConfig.Password,
 		config.Config().DatabaseConfig.Database,
 		config.Config().DatabaseConfig.Port)
-
-	logger.Debug("Trying to connect to database")
-
 	conn, err := sql.Open("postgres", connectionString)
 	errors.CheckFatal(err)
 
@@ -39,16 +36,27 @@ func connect() {
 //closes the connection to the database
 func disconnect() {
 	if connection != nil {
-		logger.Debug("Trying to disconnect from database")
+		logger.Info("Trying to disconnect from database")
 		err := connection.Close()
 		errors.CheckFatal(err)
 		return
 	}
 
-	logger.Debug("Could not disconnect from database as there if no open connection")
+	logger.Info("Could not disconnect from database as there if no open connection")
 }
 
 //opens a connection to the database and starts the migration if the tables do NOT exist yet
+//afte all that, all the registered repositories will be initialized
 func Setup() {
 	connect()
+
+	//execute migration
+	query, err := queryReader.GetSQLQuery(queryReader.MIGRATION)
+	errors.CheckFatal(err)
+
+	_, err = connection.Exec(query)
+	errors.CheckFatal(err)
+
+	//init repositories
+	repositories.Init(connection)
 }

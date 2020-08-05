@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS public."users" (
   user_id uuid,
   first_name character varying NOT NULL,
   last_name character varying NOT NULL,
+  birth_date date NOT NULL,
   gender_id int NOT NULL,
   email character varying NOT NULL UNIQUE,
   password character varying,
@@ -70,3 +71,23 @@ CREATE TABLE IF NOT EXISTS public."reminder_notifications" (
     PRIMARY KEY (notification_id),
     FOREIGN KEY (reminder_id) REFERENCES public."reminders"
 );
+
+-- insert genders
+INSERT INTO public."genders"
+    (designation)
+VALUES
+    ('male');
+INSERT INTO public."genders"
+    (designation)
+VALUES
+    ('female');
+INSERT INTO public."genders"
+    (designation)
+VALUES
+    ('undefined');
+
+-- insert test user (password: admin)
+INSERT INTO public.users
+    (user_id, first_name, last_name, birth_date, gender_id, email, password, active)
+VALUES
+   ('61f86781-98e1-4768-99cc-a8cb78796a06', 'Max', 'Mustermann', to_date('17.10.2002', 'DD.MM.YYYY'), 1, 'max.mustermann@gmail.com', '$2a$04$Kx8gEZDS5y0nBKx/U4uS0Orqme3zuPvWw9e45gcohmKzoHkTGDwgi', TRUE);

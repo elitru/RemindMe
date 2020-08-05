@@ -1,6 +1,6 @@
 package dto
 
 type GenderDTO struct {
-	GenderId    string `json:"genderId"`
+	GenderId    int    `json:"genderId"`
 	Designation string `json:"designation"`
 }

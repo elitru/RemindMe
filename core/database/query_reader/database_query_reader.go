@@ -1,8 +1,7 @@
-package database
+package query_reader
 
 import (
 	"RemindMe/errors"
-	"RemindMe/logger"
 	"io/ioutil"
 )
 
@@ -12,16 +11,14 @@ const (
 )
 
 //returns a query according to its filename
-func getQuery(queryFile string) string {
+func GetSQLQuery(queryFile string) (string, error) {
 	path := QUERIES_ROOT + queryFile
-
-	logger.Debug("Reading query file (" + path + ")")
-
 	queryRaw, err := ioutil.ReadFile(path)
-	errors.CheckFatal(err)
 
-	logger.Debug("Query was read successfully (" + path + ")")
+	if errors.Check(err) {
+		return "", err
+	}
 
 	//parse to string
-	return string(queryRaw)
+	return string(queryRaw), nil
 }

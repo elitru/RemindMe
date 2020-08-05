@@ -1,22 +1,15 @@
 package logger
 
 import (
-	"RemindMe/config"
 	"fmt"
 	"time"
 )
 
-//send debug messages
-func Debug(msg string) {
-	if config.Config().LogLevel > 0 {
-		return
-	}
-	fmt.Println(getTime() + "(INF) -> " + msg)
-}
+var logLevel = 1
 
 //logs an info
 func Info(msg string) {
-	if config.Config().LogLevel > 1 {
+	if logLevel > 1 {
 		return
 	}
 	fmt.Println(getTime() + "(INF) -> " + msg)
@@ -24,7 +17,7 @@ func Info(msg string) {
 
 //logs a warning
 func Warning(msg string) {
-	if config.Config().LogLevel > 2 {
+	if logLevel > 2 {
 		return
 	}
 	fmt.Println(getTime() + "(WAR) -> " + msg)
@@ -32,7 +25,7 @@ func Warning(msg string) {
 
 //logs en error message
 func Error(msg string) {
-	if config.Config().LogLevel > 3 {
+	if logLevel > 3 {
 		return
 	}
 	fmt.Println(getTime() + "(ERR) -> " + msg)
@@ -40,7 +33,7 @@ func Error(msg string) {
 
 //logs en error message
 func Fatal(msg string) {
-	if config.Config().LogLevel > 4 {
+	if logLevel > 4 {
 		return
 	}
 	fmt.Println(getTime() + "(FAT) -> " + msg)

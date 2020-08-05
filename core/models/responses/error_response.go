@@ -1,6 +1,7 @@
 package responses
 
 import (
+	"RemindMe/error_responses"
 	"RemindMe/errors"
 	"encoding/json"
 	"net/http"
@@ -18,12 +19,20 @@ func Error(w *http.ResponseWriter, errorCode, httpCode int) {
 		HttpStatusCode: httpCode,
 	}
 
-	//parse response to json
-	json, err := json.Marshal(errorReponse)
+	setHeaders(w)
 
-	//check for errors
-	errors.CheckFatal(err)
+	(*w).Header().Set("X-Content-Type-Options", "nosniff")
+	(*w).WriteHeader(httpCode)
+	json.NewEncoder(*w).Encode(errorReponse)
+}
 
-	//send error response
-	http.Error(*w, string(json), errorCode)
+//this function shall be called after an database action has been performed
+//if an error occured -> error response ill be returned to the user
+func DatabaseError(w *http.ResponseWriter, err error) bool {
+	if !errors.Check(err) {
+		return false
+	}
+
+	Error(w, error_responses.DATABASE_ERROR, http.StatusInternalServerError)
+	return true
 }

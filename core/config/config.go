@@ -2,7 +2,6 @@ package config
 
 import (
 	"RemindMe/errors"
-	"RemindMe/logger"
 	"encoding/json"
 	"io/ioutil"
 )
@@ -13,7 +12,6 @@ var config Configuration = Configuration{}
 
 type Configuration struct {
 	Port           int                   `json:"port"`
-	LogLevel       int                   `json:"log_level"`
 	DatabaseConfig DatabaseConfiguration `json:"database_config"`
 	JWTConfig      JWTConfig             `json:"jwt_config"`
 }
@@ -37,16 +35,12 @@ func Config() Configuration {
 	}
 
 	//read config content as byte[]
-	logger.Debug("Reading configuration file")
 	configRaw, err := ioutil.ReadFile(CONFIG_PATH)
 	errors.CheckFatal(err)
 
 	//parse to config
-	logger.Debug("Pasring configuration file")
 	err = json.Unmarshal(configRaw, &config)
 	errors.CheckFatal(err)
-
-	logger.Info("Configuration has been loaded successfully")
 
 	return config
 }
