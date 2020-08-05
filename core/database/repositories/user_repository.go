@@ -11,13 +11,13 @@ import (
 )
 
 //global access to user repository
-var Users *userRepository = nil
+var Users *UserRepository = nil
 
 //name of the user repository directory containing all the sql scripts
 var user_repository_directory = "user_repository/"
 
 //the definition of the users repository
-type userRepository struct {
+type UserRepository struct {
 	//connection to the database
 	db *sql.DB
 }
@@ -29,7 +29,7 @@ type userRepository struct {
 */
 
 //selects a user according to his user id
-func (users *userRepository) Get(userId string) (models.User, error) {
+func (users *UserRepository) Get(userId string) (models.User, error) {
 	query, err := queryReader.GetSQLQuery(user_repository_directory + "get_by_id.sql")
 
 	//check for error while reading sql query
@@ -38,21 +38,8 @@ func (users *userRepository) Get(userId string) (models.User, error) {
 	}
 
 	//make db select & parse to struct
-	var user models.User = models.User{}
 	row := (*users).db.QueryRow(query, userId)
-
-	err = row.Scan(
-		&user.UserId,
-		&user.FirstName,
-		&user.LastName,
-		&user.BirthDate,
-		&user.Gender.GenderId,
-		&user.Gender.Designation,
-		&user.Email,
-		&user.Password,
-		&user.CreatedOn,
-		&user.Active,
-	)
+	user, err := users.mapToStruct(row)
 
 	//handle errors
 	if err != nil {
@@ -70,7 +57,7 @@ func (users *userRepository) Get(userId string) (models.User, error) {
 }
 
 //selects a user according to his username
-func (users *userRepository) GetByEmail(email string) (models.User, error) {
+func (users *UserRepository) GetByEmail(email string) (models.User, error) {
 	query, err := queryReader.GetSQLQuery(user_repository_directory + "get_by_email.sql")
 
 	//check for error while reading sql query
@@ -79,21 +66,8 @@ func (users *userRepository) GetByEmail(email string) (models.User, error) {
 	}
 
 	//make db select & parse to struct
-	var user models.User = models.User{}
 	row := (*users).db.QueryRow(query, email)
-
-	err = row.Scan(
-		&user.UserId,
-		&user.FirstName,
-		&user.LastName,
-		&user.BirthDate,
-		&user.Gender.GenderId,
-		&user.Gender.Designation,
-		&user.Email,
-		&user.Password,
-		&user.CreatedOn,
-		&user.Active,
-	)
+	user, err := users.mapToStruct(row)
 
 	//handle errors
 	if err != nil {
@@ -111,7 +85,7 @@ func (users *userRepository) GetByEmail(email string) (models.User, error) {
 }
 
 //creates a new user entry and returns the according id afterwards
-func (users *userRepository) Create(email, firstname, lastname, hashedPassword string, birthdate time.Time, genderId int) (userId string, err error) {
+func (users *UserRepository) Create(email, firstname, lastname, hashedPassword string, birthdate time.Time, genderId int) (userId string, err error) {
 	query, err := queryReader.GetSQLQuery(user_repository_directory + "create.sql")
 
 	if err != nil {
@@ -135,7 +109,7 @@ func (users *userRepository) Create(email, firstname, lastname, hashedPassword s
 }
 
 //updates an user entry
-func (users *userRepository) Update(user *models.User) error {
+func (users *UserRepository) Update(user *models.User) error {
 	query, err := queryReader.GetSQLQuery(user_repository_directory + "update.sql")
 
 	if err != nil {
@@ -157,4 +131,30 @@ func (users *userRepository) Update(user *models.User) error {
 	}
 
 	return nil
+}
+
+//maps a given sql result row into a user struct
+func (users *UserRepository) mapToStruct(row SqlResultRow) (models.User, error) {
+	var user models.User = models.User{}
+
+	//parse to struct
+	err := row.Scan(
+		&user.UserId,
+		&user.FirstName,
+		&user.LastName,
+		&user.BirthDate,
+		&user.Gender.GenderId,
+		&user.Gender.Designation,
+		&user.Email,
+		&user.Password,
+		&user.CreatedOn,
+		&user.Active,
+	)
+
+	//check for errors
+	if err != nil {
+		return models.User{}, err
+	}
+
+	return user, nil
 }

@@ -9,13 +9,13 @@ import (
 )
 
 //global access to gender repository
-var Genders *genderRepository = nil
+var Genders *GenderRepository = nil
 
 //name of the gender repository directory containing all the sql scripts
 var gender_repository_directory = "gender_repository/"
 
 //the definition of the genders repository
-type genderRepository struct {
+type GenderRepository struct {
 	//connection to the database
 	db *sql.DB
 }
@@ -27,7 +27,7 @@ type genderRepository struct {
 */
 
 //selects all existing genders from the database
-func (genders *genderRepository) GetAll() ([]models.Gender, error) {
+func (genders *GenderRepository) GetAll() ([]models.Gender, error) {
 	query, err := queryReader.GetSQLQuery(gender_repository_directory + "get_all.sql")
 
 	//check for error while reading sql query
@@ -53,9 +53,7 @@ func (genders *genderRepository) GetAll() ([]models.Gender, error) {
 
 	//parse to structs
 	for rows.Next() {
-		var gender models.Gender
-
-		err = rows.Scan(&gender.GenderId, &gender.Designation)
+		gender, err := genders.mapToStruct(rows)
 
 		if errors.Check(err) {
 			return []models.Gender{}, err
@@ -68,7 +66,7 @@ func (genders *genderRepository) GetAll() ([]models.Gender, error) {
 }
 
 //retrieves a gender entry according to its id
-func (genders *genderRepository) Get(genderId int) (models.Gender, error){
+func (genders *GenderRepository) Get(genderId int) (models.Gender, error){
 	query, err := queryReader.GetSQLQuery(gender_repository_directory + "get_by_id.sql")
 
 	//check for error while reading sql query
@@ -77,13 +75,8 @@ func (genders *genderRepository) Get(genderId int) (models.Gender, error){
 	}
 
 	//make db select & parse to struct
-	var gender models.Gender = models.Gender{}
 	row := (*genders).db.QueryRow(query, genderId)
-
-	err = row.Scan(
-		&gender.GenderId,
-		&gender.Designation,
-	)
+	gender, err := genders.mapToStruct(row)
 
 	//handle errors
 	if err != nil {
@@ -94,6 +87,23 @@ func (genders *genderRepository) Get(genderId int) (models.Gender, error){
 		}
 
 		errors.Check(err)
+		return models.Gender{}, err
+	}
+
+	return gender, nil
+}
+
+//maps a given sql result row into a gender struct
+func (genders *GenderRepository) mapToStruct(row SqlResultRow) (models.Gender, error) {
+	var gender models.Gender = models.Gender{}
+
+	//parse to struct
+	err := row.Scan(
+		&gender.GenderId,
+		&gender.Designation,
+	)
+
+	if err != nil {
 		return models.Gender{}, err
 	}
 

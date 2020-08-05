@@ -3,11 +3,11 @@ package database
 import "time"
 
 type BirthdayReminder struct {
-	ReminderId string   
+	ReminderId string
 	CreatedOn  time.Time
 	Active     bool
 	Image      string
-	User       User
+	UserId     string
 	BirthDate  time.Time
 	FirstName  string
 	LastName   string

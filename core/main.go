@@ -3,6 +3,7 @@ package main
 import (
 	"RemindMe/config"
 	"RemindMe/database"
+	birthdayReminders "RemindMe/handlers/birthday_reminders"
 	"RemindMe/handlers/middleware"
 	"RemindMe/handlers/users"
 	"RemindMe/logger"
@@ -34,4 +35,6 @@ func InitRoutes(router *mux.Router) {
 	router.HandleFunc("/users/create", users.Register).Methods("POST")
 	router.HandleFunc("/users/deactivate", middleware.WithAuthentication(users.Deactivate).ServeHTTP).Methods("DELETE")
 	router.HandleFunc("/users/change-password", middleware.WithAuthentication(users.ChangePassword).ServeHTTP).Methods("POST")
+
+	router.HandleFunc("/reminders/birthdays/create", middleware.WithAuthentication(birthdayReminders.CreateReminder).ServeHTTP).Methods("POST")
 }

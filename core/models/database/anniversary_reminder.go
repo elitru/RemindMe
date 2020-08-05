@@ -7,7 +7,7 @@ type AnniversaryReminder struct {
 	CreatedOn  time.Time
 	Active     bool
 	Image      string
-	User       User
+	UserId     string
 	EventDate  time.Time
 	EventSince time.Time
 	Title      string
