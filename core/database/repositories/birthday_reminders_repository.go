@@ -10,10 +10,10 @@ import (
 )
 
 //global access to gender repository
-var BirthdaybirthdayReminders *BirthdayReminderRepository = nil
+var BirthdayReminders *BirthdayReminderRepository = nil
 
 //name of the gender repository directory containing all the sql scripts
-var birthday_birthdayReminders_repository_directory = "birthday_birthdayReminders_repository/"
+var birthday_reminders_repository_directory = "birthday_reminders_repository/"
 
 //the definition of the genders repository
 type BirthdayReminderRepository struct {
@@ -29,7 +29,7 @@ type BirthdayReminderRepository struct {
 
 //retrieves all birthdayReminders for a given user
 func (birthdayReminders *BirthdayReminderRepository) GetAll(userId string) ([]models.BirthdayReminder, error) {
-	query, err := query_reader.GetSQLQuery(birthday_birthdayReminders_repository_directory + "get_all.sql")
+	query, err := query_reader.GetSQLQuery(birthday_reminders_repository_directory + "get_all.sql")
 
 	//check for error while reading sql query
 	if err != nil {
@@ -69,7 +69,7 @@ func (birthdayReminders *BirthdayReminderRepository) GetAll(userId string) ([]mo
 
 //get a single reminder by a given reminder id
 func (birthdayReminders *BirthdayReminderRepository) Get(reminderId string) (models.BirthdayReminder, error) {
-	query, err := query_reader.GetSQLQuery(birthday_birthdayReminders_repository_directory + "get_by_id.sql")
+	query, err := query_reader.GetSQLQuery(birthday_reminders_repository_directory + "get_by_id.sql")
 
 	//check for error while reading sql query
 	if errors.Check(err) {
@@ -98,7 +98,7 @@ func (birthdayReminders *BirthdayReminderRepository) Create(userId, image, first
 	}
 
 	//after the base reminder has been created successfully -> create the birthday reminder entry
-	query, err := query_reader.GetSQLQuery(birthday_birthdayReminders_repository_directory + "create.sql")
+	query, err := query_reader.GetSQLQuery(birthday_reminders_repository_directory + "create.sql")
 
 	//check for error while reading sql query
 	if errors.Check(err) {
@@ -129,7 +129,7 @@ func (birthdayReminders *BirthdayReminderRepository) Update(reminder *models.Bir
 	}
 
 	//afterwards update birthday reminder entry
-	query, err := query_reader.GetSQLQuery(birthday_birthdayReminders_repository_directory + "create.sql")
+	query, err := query_reader.GetSQLQuery(birthday_reminders_repository_directory + "create.sql")
 
 	//check for error while reading sql query
 	if errors.Check(err) {

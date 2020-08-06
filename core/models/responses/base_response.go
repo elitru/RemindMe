@@ -10,13 +10,9 @@ type DefaultResponse struct {
 }
 
 //sends a default response just containing the status code
-func BaseResponse(w *http.ResponseWriter, status int) {
-	response := DefaultResponse{
-		Status: status,
-	}
-
+func (response *DefaultResponse) Send(w *http.ResponseWriter) {
 	setHeaders(w)
-	json.NewEncoder(*w).Encode(response)
+	json.NewEncoder(*w).Encode(*response)
 }
 
 //set the response headers of all http responses

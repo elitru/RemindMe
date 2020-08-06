@@ -50,7 +50,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//send response
-	responses.UserAuthenticated(&w, &user, token)
+	response := responses.UserAuthenticationResponse{User:user.MapToDTO(), Token:token}
+	response.Send(&w)
 }
 
 //Endpoint for creating a new user
@@ -112,7 +113,8 @@ func Register(w http.ResponseWriter, r *http.Request){
 	}
 
 	//send response
-	responses.UserAuthenticated(&w, &user, token)
+	response := responses.UserAuthenticationResponse{User:user.MapToDTO(), Token:token}
+	response.Send(&w)
 }
 
 //Endpoint for deactivating an user account
@@ -131,7 +133,8 @@ func Deactivate(w http.ResponseWriter, r *http.Request, userId string) {
 	if responses.DatabaseError(&w, err) { return }
 
 	//send default success response
-	responses.BaseResponse(&w, http.StatusOK)
+	response := responses.DefaultResponse{Status:http.StatusOK}
+	response.Send(&w)
 }
 
 //Endpoint for changing user password
@@ -156,5 +159,6 @@ func ChangePassword(w http.ResponseWriter, r *http.Request, userId string) {
 	if responses.DatabaseError(&w, err) { return }
 
 	//send default success response
-	responses.BaseResponse(&w, http.StatusOK)
+	response := responses.DefaultResponse{Status:http.StatusOK}
+	response.Send(&w)
 }
