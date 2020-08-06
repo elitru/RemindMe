@@ -3,7 +3,7 @@ package users
 import (
 	"RemindMe/database/repositories"
 	"RemindMe/encryption"
-	"RemindMe/error_responses"
+	errorResponses "RemindMe/error_responses"
 	"RemindMe/errors"
 	"RemindMe/jwt"
 	"RemindMe/logger"
@@ -30,14 +30,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	//check if a user with that email even exists
 	if user == (models.User{}) {
-		responses.Error(&w, error_responses.USER_NOT_FOUND, http.StatusBadRequest)
+		responses.Error(&w, errorResponses.USER_NOT_FOUND, http.StatusBadRequest)
 		return
 	}
 
 	//check password
 	correct := encryption.CheckPassword(loginRequest.Password, user.Password)
 	if !correct {
-		responses.Error(&w, error_responses.LOGIN_DATA_INVALID, http.StatusForbidden)
+		responses.Error(&w, errorResponses.LOGIN_DATA_INVALID, http.StatusForbidden)
 		return
 	}
 
@@ -45,7 +45,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	token, err := jwt.GetToken(user.UserId)
 
 	if errors.Check(err) {
-		responses.Error(&w, error_responses.TOKEN_GENERATION_FAILED, http.StatusInternalServerError)
+		responses.Error(&w, errorResponses.TOKEN_GENERATION_FAILED, http.StatusInternalServerError)
 		return
 	}
 
@@ -70,7 +70,7 @@ func Register(w http.ResponseWriter, r *http.Request){
 
 	//check if that email is already in use
 	if user != (models.User{}) {
-		responses.Error(&w, error_responses.EMAIL_ALREADY_IN_USE, http.StatusBadRequest)
+		responses.Error(&w, errorResponses.EMAIL_ALREADY_IN_USE, http.StatusBadRequest)
 		return
 	}
 
@@ -81,7 +81,7 @@ func Register(w http.ResponseWriter, r *http.Request){
 	if responses.DatabaseError(&w, err) { return }
 
 	if gender == (models.Gender{}) {
-		responses.Error(&w, error_responses.GENDER_DOES_NOT_EXIST, http.StatusBadRequest)
+		responses.Error(&w, errorResponses.GENDER_DOES_NOT_EXIST, http.StatusBadRequest)
 		return
 	}
 
@@ -108,7 +108,7 @@ func Register(w http.ResponseWriter, r *http.Request){
 	token, err := jwt.GetToken(user.UserId)
 
 	if errors.Check(err) {
-		responses.Error(&w, error_responses.TOKEN_GENERATION_FAILED, http.StatusInternalServerError)
+		responses.Error(&w, errorResponses.TOKEN_GENERATION_FAILED, http.StatusInternalServerError)
 		return
 	}
 
@@ -149,7 +149,7 @@ func ChangePassword(w http.ResponseWriter, r *http.Request, userId string) {
 
 	//check if user evene exists
 	if user == (models.User{}) {
-		responses.Error(&w, error_responses.USER_NOT_FOUND, http.StatusBadRequest)
+		responses.Error(&w, errorResponses.USER_NOT_FOUND, http.StatusBadRequest)
 		return
 	}
 

@@ -2,7 +2,7 @@ package birthday_reminders
 
 import (
 	"RemindMe/database/repositories"
-	"RemindMe/error_responses"
+	errorResponses "RemindMe/error_responses"
 	models "RemindMe/models/database"
 	"RemindMe/models/requests"
 	"RemindMe/models/responses"
@@ -53,13 +53,13 @@ func Update(w http.ResponseWriter, r *http.Request, userId string) {
 
 	//check if reminder even exists
 	if reminder == (models.BirthdayReminder{}) {
-		responses.Error(&w, error_responses.REMINDER_ENTRY_NOT_FOUND, http.StatusBadRequest)
+		responses.Error(&w, errorResponses.REMINDER_ENTRY_NOT_FOUND, http.StatusBadRequest)
 		return
 	}
 
 	//check if reminder even belongs to user
 	if reminder.UserId != userId {
-		responses.Error(&w, error_responses.MISSING_PERMISSION, http.StatusForbidden)
+		responses.Error(&w, errorResponses.MISSING_PERMISSION, http.StatusForbidden)
 		return
 	}
 
@@ -94,13 +94,13 @@ func Deactivate(w http.ResponseWriter, r *http.Request, userId string) {
 
 	//check if reminder even exists
 	if reminder == (models.BirthdayReminder{}) {
-		responses.Error(&w, error_responses.REMINDER_ENTRY_NOT_FOUND, http.StatusBadRequest)
+		responses.Error(&w, errorResponses.REMINDER_ENTRY_NOT_FOUND, http.StatusBadRequest)
 		return
 	}
 
 	//check if reminder even belongs to user
 	if reminder.UserId != userId {
-		responses.Error(&w, error_responses.MISSING_PERMISSION, http.StatusForbidden)
+		responses.Error(&w, errorResponses.MISSING_PERMISSION, http.StatusForbidden)
 		return
 	}
 
