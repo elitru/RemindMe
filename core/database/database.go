@@ -47,15 +47,17 @@ func disconnect() {
 
 //opens a connection to the database and starts the migration if the tables do NOT exist yet
 //afte all that, all the registered repositories will be initialized
-func Setup() {
+func Setup(withMigration bool) {
 	connect()
 
-	//execute migration
-	query, err := queryReader.GetSQLQuery(queryReader.MIGRATION)
-	errors.CheckFatal(err)
+	if withMigration {
+		//execute migration
+		query, err := queryReader.GetSQLQuery(queryReader.MIGRATION)
+		errors.CheckFatal(err)
 
-	_, err = connection.Exec(query)
-	errors.CheckFatal(err)
+		_, err = connection.Exec(query)
+		errors.CheckFatal(err)
+	}
 
 	//init repositories
 	repositories.Init(connection)

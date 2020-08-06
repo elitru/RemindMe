@@ -1,13 +1,8 @@
 package database
 
-type BirthdayNotification struct {
+type Notification struct {
 	NotificationId string
-	Reminder       BirthdayReminder
+	ReminderId     string
 	RemindBefore   float64
-}
-
-type AnniversaryNotification struct {
-	NotificationId string
-	Reminder       AnniversaryReminder
-	RemindBefore   float64
+	UserId         string
 }

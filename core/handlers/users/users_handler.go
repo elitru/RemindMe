@@ -146,6 +146,13 @@ func ChangePassword(w http.ResponseWriter, r *http.Request, userId string) {
 	}
 
 	user, err := repositories.Users.Get(userId)
+
+	//check if user evene exists
+	if user == (models.User{}) {
+		responses.Error(&w, error_responses.USER_NOT_FOUND, http.StatusBadRequest)
+		return
+	}
+
 	//check for database errors
 	if responses.DatabaseError(&w, err) { return }
 

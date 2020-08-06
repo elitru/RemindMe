@@ -36,7 +36,7 @@ func (birthdayReminders *BirthdayReminderRepository) GetAll(userId string) ([]mo
 		return []models.BirthdayReminder{}, err
 	}
 
-	var birthdaybirthdayReminders []models.BirthdayReminder
+	var retrievedBirthdayReminders []models.BirthdayReminder
 
 	//query from database
 	rows, err := (*birthdayReminders).db.Query(query, userId)
@@ -45,12 +45,12 @@ func (birthdayReminders *BirthdayReminderRepository) GetAll(userId string) ([]mo
 	if err != nil {
 		if err == sql.ErrNoRows {
 			//no genders found
-			logger.Info("No genders found!")
-			return birthdaybirthdayReminders, nil
+			logger.Info("No birthday reminders found!")
+			return retrievedBirthdayReminders, nil
 		}
 
 		errors.Check(err)
-		return birthdaybirthdayReminders, err
+		return retrievedBirthdayReminders, err
 	}
 
 	//parse results
@@ -61,10 +61,10 @@ func (birthdayReminders *BirthdayReminderRepository) GetAll(userId string) ([]mo
 			return []models.BirthdayReminder{}, err
 		}
 
-		birthdaybirthdayReminders = append(birthdaybirthdayReminders, reminder)
+		retrievedBirthdayReminders = append(retrievedBirthdayReminders, reminder)
 	}
 
-	return birthdaybirthdayReminders, nil
+	return retrievedBirthdayReminders, nil
 }
 
 //get a single reminder by a given reminder id
@@ -122,14 +122,14 @@ func (birthdayReminders *BirthdayReminderRepository) Create(userId, image, first
 //updates an existing birthday reminder entry
 func (birthdayReminders *BirthdayReminderRepository) Update(reminder *models.BirthdayReminder) error {
 	//update base reminder entry
-	err := (*reminders).Update(reminder.ReminderId, reminder.Image, reminder.Active)
+	err := reminders.Update(reminder.ReminderId, reminder.Image, reminder.Active)
 
 	if errors.Check(err) {
 		return err
 	}
 
 	//afterwards update birthday reminder entry
-	query, err := query_reader.GetSQLQuery(birthday_reminders_repository_directory + "create.sql")
+	query, err := query_reader.GetSQLQuery(birthday_reminders_repository_directory + "update.sql")
 
 	//check for error while reading sql query
 	if errors.Check(err) {

@@ -22,7 +22,7 @@ func InitRouter() {
 	router := mux.NewRouter()
 	InitRoutes(router)
 
-	database.Setup()
+	database.Setup(config.Config().DatabaseConfig.WithMigration)
 
 	//start web service
 	logger.Info("Server starting on port " + strconv.Itoa(config.Config().Port))
@@ -36,5 +36,7 @@ func InitRoutes(router *mux.Router) {
 	router.HandleFunc("/users/deactivate", middleware.WithAuthentication(users.Deactivate).ServeHTTP).Methods("DELETE")
 	router.HandleFunc("/users/change-password", middleware.WithAuthentication(users.ChangePassword).ServeHTTP).Methods("POST")
 
-	router.HandleFunc("/reminders/birthdays/create", middleware.WithAuthentication(birthdayReminders.CreateReminder).ServeHTTP).Methods("POST")
+	router.HandleFunc("/reminders/birthdays/create", middleware.WithAuthentication(birthdayReminders.Create).ServeHTTP).Methods("POST")
+	router.HandleFunc("/reminders/birthdays/update", middleware.WithAuthentication(birthdayReminders.Update).ServeHTTP).Methods("POST")
+	router.HandleFunc("/reminders/birthdays/deactivate", middleware.WithAuthentication(birthdayReminders.Deactivate).ServeHTTP).Methods("DELETE")
 }

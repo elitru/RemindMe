@@ -6,12 +6,12 @@ import (
 	"net/http"
 )
 
-type BirthdayReminderCreatedResponse struct {
+type BirthdayReminderResponse struct {
 	BirthdayReminder dto.BirthdayReminderDTO `json:"birthdayReminder"`
 }
 
 //sends the according response
-func (response *BirthdayReminderCreatedResponse) Send(w *http.ResponseWriter) {
+func (response *BirthdayReminderResponse) Send(w *http.ResponseWriter) {
 	setHeaders(w)
 	json.NewEncoder(*w).Encode(*response)
 }

@@ -13,4 +13,5 @@ func Init(dbConnection *sql.DB) {
 	Users = &UserRepository{db: dbConnection}
 	Genders = &GenderRepository{db:dbConnection}
 	BirthdayReminders = &BirthdayReminderRepository{db:dbConnection}
+	Notifications = &NotificationRepository{db:dbConnection}
 }

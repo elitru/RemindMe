@@ -17,11 +17,12 @@ type Configuration struct {
 }
 
 type DatabaseConfiguration struct {
-	Host     string `json:"host"`
-	Port     int    `json:"port"`
-	User     string `json:"user"`
-	Password string `json:"password"`
-	Database string `json:"database"`
+	WithMigration bool   `json:"with_migration"`
+	Host          string `json:"host"`
+	Port          int    `json:"port"`
+	User          string `json:"user"`
+	Password      string `json:"password"`
+	Database      string `json:"database"`
 }
 
 type JWTConfig struct {
