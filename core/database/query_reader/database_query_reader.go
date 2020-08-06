@@ -1,7 +1,6 @@
 package query_reader
 
 import (
-	"RemindMe/errors"
 	"io/ioutil"
 )
 
@@ -15,7 +14,7 @@ func GetSQLQuery(queryFile string) (string, error) {
 	path := QUERIES_ROOT + queryFile
 	queryRaw, err := ioutil.ReadFile(path)
 
-	if errors.Check(err) {
+	if err != nil {
 		return "", err
 	}
 

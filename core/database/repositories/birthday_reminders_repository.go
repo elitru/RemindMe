@@ -10,10 +10,10 @@ import (
 )
 
 //global access to gender repository
-var BirthdayReminders *BirthdayReminderRepository = nil
+var BirthdaybirthdayReminders *BirthdayReminderRepository = nil
 
 //name of the gender repository directory containing all the sql scripts
-var birthday_reminders_repository_directory = "birthday_reminders_repository/"
+var birthday_birthdayReminders_repository_directory = "birthday_birthdayReminders_repository/"
 
 //the definition of the genders repository
 type BirthdayReminderRepository struct {
@@ -27,49 +27,49 @@ type BirthdayReminderRepository struct {
 	==============================
 */
 
-//retrieves all reminders for a given user
-func (reminders *BirthdayReminderRepository) GetAll(userId string) ([]models.BirthdayReminder, error) {
-	query, err := query_reader.GetSQLQuery(birthday_reminders_repository_directory + "get_all.sql")
+//retrieves all birthdayReminders for a given user
+func (birthdayReminders *BirthdayReminderRepository) GetAll(userId string) ([]models.BirthdayReminder, error) {
+	query, err := query_reader.GetSQLQuery(birthday_birthdayReminders_repository_directory + "get_all.sql")
 
 	//check for error while reading sql query
 	if err != nil {
 		return []models.BirthdayReminder{}, err
 	}
 
-	var birthdayReminders []models.BirthdayReminder
+	var birthdaybirthdayReminders []models.BirthdayReminder
 
 	//query from database
-	rows, err := (*reminders).db.Query(query, userId)
+	rows, err := (*birthdayReminders).db.Query(query, userId)
 
 	//handle errors
 	if err != nil {
 		if err == sql.ErrNoRows {
 			//no genders found
 			logger.Info("No genders found!")
-			return birthdayReminders, nil
+			return birthdaybirthdayReminders, nil
 		}
 
 		errors.Check(err)
-		return birthdayReminders, err
+		return birthdaybirthdayReminders, err
 	}
 
 	//parse results
 	for rows.Next() {
-		reminder, err := reminders.mapToStruct(rows)
+		reminder, err := birthdayReminders.mapToStruct(rows)
 
 		if errors.Check(err) {
 			return []models.BirthdayReminder{}, err
 		}
 
-		birthdayReminders = append(birthdayReminders, reminder)
+		birthdaybirthdayReminders = append(birthdaybirthdayReminders, reminder)
 	}
 
-	return birthdayReminders, nil
+	return birthdaybirthdayReminders, nil
 }
 
 //get a single reminder by a given reminder id
-func (reminders *BirthdayReminderRepository) Get(reminderId string) (models.BirthdayReminder, error) {
-	query, err := query_reader.GetSQLQuery(birthday_reminders_repository_directory + "get_by_id.sql")
+func (birthdayReminders *BirthdayReminderRepository) Get(reminderId string) (models.BirthdayReminder, error) {
+	query, err := query_reader.GetSQLQuery(birthday_birthdayReminders_repository_directory + "get_by_id.sql")
 
 	//check for error while reading sql query
 	if errors.Check(err) {
@@ -77,8 +77,8 @@ func (reminders *BirthdayReminderRepository) Get(reminderId string) (models.Birt
 	}
 
 	//select from database
-	row := (*reminders).db.QueryRow(query, reminderId)
-	reminder, err := reminders.mapToStruct(row)
+	row := (*birthdayReminders).db.QueryRow(query, reminderId)
+	reminder, err := birthdayReminders.mapToStruct(row)
 
 	if errors.Check(err) {
 		return models.BirthdayReminder{}, err
@@ -88,12 +88,70 @@ func (reminders *BirthdayReminderRepository) Get(reminderId string) (models.Birt
 }
 
 //saves a new reminder entry into the database
-func (reminders *BirthdayReminderRepository) Create(userId, image, firstname, lastname, nickname string, birthdate time.Time) (reminderId string, err error) {
-	return "", nil
+func (birthdayReminders *BirthdayReminderRepository) Create(userId, image, firstname, lastname, nickname string, birthdate time.Time) (reminderId string, err error) {
+	//create base reminder entry
+	reminderId, err = (*reminders).Create(image, userId)
+
+	//check for errors that might have occurred during insertion
+	if err != nil {
+		return "", err
+	}
+
+	//after the base reminder has been created successfully -> create the birthday reminder entry
+	query, err := query_reader.GetSQLQuery(birthday_birthdayReminders_repository_directory + "create.sql")
+
+	//check for error while reading sql query
+	if errors.Check(err) {
+		return "", err
+	}
+
+	err = (*birthdayReminders).db.QueryRow(query,
+											 reminderId,
+											 birthdate,
+											 firstname,
+											 lastname,
+											 nickname).Scan(&reminderId)
+
+	if errors.Check(err) {
+		return "", err
+	}
+
+	return reminderId, nil
+}
+
+//updates an existing birthday reminder entry
+func (birthdayReminders *BirthdayReminderRepository) Update(reminder *models.BirthdayReminder) error {
+	//update base reminder entry
+	err := (*reminders).Update(reminder.ReminderId, reminder.Image, reminder.Active)
+
+	if errors.Check(err) {
+		return err
+	}
+
+	//afterwards update birthday reminder entry
+	query, err := query_reader.GetSQLQuery(birthday_birthdayReminders_repository_directory + "create.sql")
+
+	//check for error while reading sql query
+	if errors.Check(err) {
+		return err
+	}
+
+	//update database
+	_, err = (*birthdayReminders).db.Exec(query,
+										  reminder.FirstName,
+										  reminder.LastName,
+										  reminder.NickName,
+										  reminder.BirthDate,
+										  reminder.ReminderId)
+	if errors.Check(err) {
+		return err
+	}
+
+	return nil
 }
 
 //maps a given sql result row into a birthday reminder struct
-func (reminders *BirthdayReminderRepository) mapToStruct(row SqlResultRow) (models.BirthdayReminder, error) {
+func (birthdayReminders *BirthdayReminderRepository) mapToStruct(row SqlResultRow) (models.BirthdayReminder, error) {
 	var reminder models.BirthdayReminder
 
 	//parse into struct
