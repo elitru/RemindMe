@@ -8,7 +8,7 @@ type SqlResultRow interface {
 
 //creates all registered repositories for the web service
 func Init(dbConnection *sql.DB) {
-	reminders = &ReminderRepository{db:dbConnection}
+	Reminders = &ReminderRepository{db: dbConnection}
 
 	Users = &UserRepository{db: dbConnection}
 	Genders = &GenderRepository{db:dbConnection}

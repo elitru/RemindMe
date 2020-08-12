@@ -45,7 +45,7 @@ func (birthdayReminders *BirthdayReminderRepository) GetAll(userId string) ([]mo
 	if err != nil {
 		if err == sql.ErrNoRows {
 			//no genders found
-			logger.Info("No birthday reminders found!")
+			logger.Info("No birthday Reminders found!")
 			return retrievedBirthdayReminders, nil
 		}
 
@@ -90,7 +90,7 @@ func (birthdayReminders *BirthdayReminderRepository) Get(reminderId string) (mod
 //saves a new reminder entry into the database
 func (birthdayReminders *BirthdayReminderRepository) Create(userId, image, firstname, lastname, nickname string, birthdate time.Time) (reminderId string, err error) {
 	//create base reminder entry
-	reminderId, err = (*reminders).Create(image, userId)
+	reminderId, err = (*Reminders).Create(image, userId)
 
 	//check for errors that might have occurred during insertion
 	if err != nil {
@@ -122,7 +122,7 @@ func (birthdayReminders *BirthdayReminderRepository) Create(userId, image, first
 //updates an existing birthday reminder entry
 func (birthdayReminders *BirthdayReminderRepository) Update(reminder *models.BirthdayReminder) error {
 	//update base reminder entry
-	err := reminders.Update(reminder.ReminderId, reminder.Image, reminder.Active)
+	err := Reminders.Update(reminder.ReminderId, reminder.Image, reminder.Active)
 
 	if errors.Check(err) {
 		return err

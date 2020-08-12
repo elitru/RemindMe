@@ -5,6 +5,7 @@ import (
 	"RemindMe/database"
 	birthdayReminders "RemindMe/handlers/birthday_reminders"
 	"RemindMe/handlers/middleware"
+	"RemindMe/handlers/notifications"
 	"RemindMe/handlers/users"
 	"RemindMe/logger"
 	"github.com/gorilla/mux"
@@ -39,4 +40,8 @@ func InitRoutes(router *mux.Router) {
 	router.HandleFunc("/reminders/birthdays/create", middleware.WithAuthentication(birthdayReminders.Create).ServeHTTP).Methods("POST")
 	router.HandleFunc("/reminders/birthdays/update", middleware.WithAuthentication(birthdayReminders.Update).ServeHTTP).Methods("POST")
 	router.HandleFunc("/reminders/birthdays/deactivate", middleware.WithAuthentication(birthdayReminders.Deactivate).ServeHTTP).Methods("DELETE")
+
+	router.HandleFunc("/reminders/notifications/{reminderId}", middleware.WithAuthentication(notifications.GetAllForReminder).ServeHTTP).Methods("GET")
+	router.HandleFunc("/reminders/notifications/create", middleware.WithAuthentication(notifications.Create).ServeHTTP).Methods("POST")
+	router.HandleFunc("/reminders/notifications/delete", middleware.WithAuthentication(notifications.Delete).ServeHTTP).Methods("DELETE")
 }

@@ -6,6 +6,7 @@ import (
 	"RemindMe/logger"
 	models "RemindMe/models/database"
 	"database/sql"
+	"github.com/google/uuid"
 )
 
 //global access to gender repository
@@ -126,8 +127,27 @@ func (notifications *NotificationRepository) Get(notificationId string) (models.
 	return notification, nil
 }
 
+//retrieves notifications for a given reminder and a given remindBefore time
+func (notifications *NotificationRepository) GetByReminderAndTime(reminderId string, remindBefore float64) (models.Notification, error) {
+	query, err := query_reader.GetSQLQuery(birthday_reminders_repository_directory + "get_by_reminder_and_time.sql")
+
+	//check for error while reading sql query
+	if errors.Check(err) {
+		return models.Notification{}, err
+	}
+
+	row := (*notifications).db.QueryRow(query, reminderId, remindBefore)
+	notification, err := notifications.mapToStruct(row)
+
+	if errors.Check(err) {
+		return models.Notification{}, err
+	}
+
+	return notification, err
+}
+
 //deletes an existing notification entry according to it id
-func (notifications *NotificationRepository) Delete(notification *models.Notification) error {
+func (notifications *NotificationRepository) Delete(notificationId string) error {
 	query, err := query_reader.GetSQLQuery(notification_repository_directory + "update.sql")
 
 	//check for error while reading sql query
@@ -136,13 +156,32 @@ func (notifications *NotificationRepository) Delete(notification *models.Notific
 	}
 
 	//delete entry from database
-	_, err = (*notifications).db.Exec(query, notification.NotificationId)
+	_, err = (*notifications).db.Exec(query, notificationId)
 
 	if errors.Check(err) {
 		return err
 	}
 
 	return nil
+}
+
+//creates a new notification entry for a given reminder
+func (notifications *NotificationRepository) Create(reminderId string, remindBefore float64) (notificationId string, err error) {
+	query, err := query_reader.GetSQLQuery(notification_repository_directory + "create.sql")
+
+	//check for error while reading sql query
+	if errors.Check(err) {
+		return "", err
+	}
+
+	notificationId = uuid.New().String()
+	_, err = (*notifications).db.Exec(query, notificationId, reminderId, remindBefore)
+
+	if errors.Check(err) {
+		return "", err
+	}
+
+	return notificationId, nil
 }
 
 func (notifications *NotificationRepository) mapToStruct(row SqlResultRow) (models.Notification, error){
@@ -154,6 +193,10 @@ func (notifications *NotificationRepository) mapToStruct(row SqlResultRow) (mode
 				    &notification.UserId)
 
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return models.Notification{}, nil
+		}
+
 		return models.Notification{}, err
 	}
 
