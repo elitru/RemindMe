@@ -3,6 +3,7 @@ import React from "react";
 import { ThemeProvider } from "./theme-provider";
 import { UserProvider } from "./user-provider";
 import { AssetsProvider } from "./assets-provider";
+import { TranslationsProvider } from "./translations-provider";
 
 const StoreContext = React.createContext<Store | null>(null);
 let store: Store | null = null;
@@ -39,6 +40,7 @@ const createStore = (): Store => {
     return new Store(
         new ThemeProvider(),
         new UserProvider(),
-        new AssetsProvider()
+        new AssetsProvider(),
+        new TranslationsProvider()
     );
 };

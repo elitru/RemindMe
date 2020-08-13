@@ -31,7 +31,6 @@ export class ThemeProvider {
     }
 
     public async setTheme(theme: Themes): Promise<void> {
-        theme = 0;
         this.theme = THEMES[THEMES.map(theme => theme.id).indexOf(theme)];
         
         try {
@@ -55,7 +54,7 @@ export enum Themes {
 const THEMES: Theme[] = [
     //Default
     {
-        id: 0,
+        id: Themes.DEFAULT,
         primary_1: '#004B40',
         primary_2: '#1A6254',
         primary_3: '#D8E6E2',
@@ -63,6 +62,7 @@ const THEMES: Theme[] = [
         background_secondary: '#FAFAFA',
         input_color_foreground: '#333333',
         input_placeholder_foreground: '#BDBDBD',
-        drop_shadow: 'rgba(0, 0, 0, .3)'
+        drop_shadow: 'rgba(0, 0, 0, .3)',
+        title_foreground: '#D8E6E2'
     }
 ];

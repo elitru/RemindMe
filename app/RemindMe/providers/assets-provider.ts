@@ -1,5 +1,5 @@
-const logo = require('./../assets/logo/logo.png');
+const Logo = require('./../assets/logo/logo.png');
 
 export class AssetsProvider {
-    public readonly Logo = logo;
+    public readonly Logo = Logo;
 }

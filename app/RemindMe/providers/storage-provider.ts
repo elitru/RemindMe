@@ -37,4 +37,5 @@ export class StorageKeys {
     public static readonly Theme: string = 'REMIND_ME.THEME';
     public static readonly User: string = 'REMIND_ME.USER';
     public static readonly ApiToken: string = 'REMIND_ME.API_TOKEN';
+    public static readonly Language: string = 'REMIND_ME.LANGUAGE';
 }

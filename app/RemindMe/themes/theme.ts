@@ -8,4 +8,5 @@ export interface Theme {
     readonly input_placeholder_foreground: string;
     readonly input_color_foreground: string;
     readonly drop_shadow: string;
+    readonly title_foreground: string;
 }
