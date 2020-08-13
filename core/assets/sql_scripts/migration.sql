@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS public."reminders_birthdays";
 DROP TABLE IF EXISTS public."reminders_anniversaries";
 DROP TABLE IF EXISTS public."types";
 DROP TABLE IF EXISTS public."reminders";
+DROP TABLE IF EXISTS public."user_app_keys";
 DROP TABLE IF EXISTS public."users";
 DROP TABLE IF EXISTS public."genders";
 
@@ -29,6 +30,15 @@ CREATE TABLE IF NOT EXISTS public."users" (
   created_on timestamp NOT NULL DEFAULT NOW(),
   PRIMARY KEY (user_id),
   FOREIGN KEY (gender_id) REFERENCES public."genders"
+);
+
+-- Create expo token storage table for users
+CREATE TABLE IF NOT EXISTS public."user_app_keys" (
+    user_app_token_id uuid,
+    app_token character varying NOT NULL UNIQUE,
+    user_id uuid,
+    PRIMARY KEY (user_app_token_id),
+    FOREIGN KEY (user_id) REFERENCES public."users"
 );
 
 -- Create table reminders
