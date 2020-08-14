@@ -12,4 +12,6 @@ export interface Translation {
     readonly Login: string;
     readonly ForgotPassword: string;
     readonly NoAccountYet: string;
+    readonly EmailPlaceholder: string;
+    readonly PasswordPlaceholder: string;
 }

@@ -70,6 +70,8 @@ const TRANSLATIONS: Translation[] = [
         Ok: 'Ok',
         NoAccountYet: 'NO ACCOUNT? SIGN UP FOR FREE',
         Password: 'Password',
-        SignIn: 'Sign In'
+        SignIn: 'Sign In',
+        EmailPlaceholder: 'john.doe@example.com',
+        PasswordPlaceholder: '●●●●●●●●●●'
     }
 ];

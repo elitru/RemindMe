@@ -9,4 +9,9 @@ export interface Theme {
     readonly input_color_foreground: string;
     readonly drop_shadow: string;
     readonly title_foreground: string;
+    readonly input_container_title: string;
+    readonly button_background: string;
+    readonly button_foreground: string;
+    readonly text_button_foreground: string;
+    readonly copyright_color: string;
 }

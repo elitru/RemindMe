@@ -1,14 +1,17 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useStore } from '../../providers/store-context-provider';
 import { Store } from '../../models/store';
 import { Theme } from '../../themes/theme';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import { Asset } from 'expo-asset';
+import { InputContainer } from './InputContainer';
+import { Input } from '../Shared/Input';
+import { Login } from './Login/Login';
 
 interface Props {
-    
+
 }
 
 export const Authentication = observer((props: Props) => {
@@ -25,7 +28,7 @@ export const Authentication = observer((props: Props) => {
                 <Text style={style.title}>{translations?.AppTitle}</Text>
             </View>
             <View style={style.bottom}>
-            
+                <Login />
             </View>
         </View>
     );
@@ -46,7 +49,7 @@ const getStyle = (store: Store) => {
         },
         top: {
             width: '100%',
-            height: '50%',
+            height: '45%',
             backgroundColor: theme?.primary_1,
             display: 'flex',
             justifyContent: 'center',
@@ -62,7 +65,8 @@ const getStyle = (store: Store) => {
             alignItems: 'center',
             alignContent: 'center',
             backgroundColor: theme?.primary_2,
-            borderRadius: 100
+            borderRadius: 100,
+            overflow: 'hidden'
         },
         logo: {
             flex: 1,
@@ -78,8 +82,13 @@ const getStyle = (store: Store) => {
         },
         bottom: {
             width: '100%',
-            height: '50%',
+            height: '55%',
             backgroundColor: theme?.background_primary
+        },
+        inputContainer: {
+            width: '100%',
+            height: '100%',
+            marginTop: -50
         }
     });
 };

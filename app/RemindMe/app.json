@@ -23,7 +23,8 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "at.EliasTrummer.RemindMe"
+      "package": "at.EliasTrummer.RemindMe",
+      "softwareKeyboardLayoutMode": "pan"
     }
   }
 }

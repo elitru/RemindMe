@@ -62,7 +62,12 @@ const THEMES: Theme[] = [
         background_secondary: '#FAFAFA',
         input_color_foreground: '#333333',
         input_placeholder_foreground: '#BDBDBD',
-        drop_shadow: 'rgba(0, 0, 0, .3)',
-        title_foreground: '#D8E6E2'
+        drop_shadow: 'rgba(0, 0, 0, .5)',
+        title_foreground: '#D8E6E2',
+        input_container_title: '#1A6254',
+        button_background: '#004B40',
+        button_foreground: '#ffffff',
+        text_button_foreground: '#4F4F4F',
+        copyright_color: '#4F4F4F'
     }
 ];
